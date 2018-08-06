@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% if app.user %}
+        <h1>Bienvenue sur la page test login utilisateur !</h1>
+        <p>Hello {{ app.user.username }}, tu es bien connecté en tant qu'utilisateur !</p>
+    {% endif %}
+    
+    {% if app.user.hasRole('ROLE_ADMIN') %}
+        <div>Tu es admin, tous les utilisateurs ont accès à cette page, mais seul toi peut voir cette phrase.</div>
+    {% endif %}
+
+</body>
+</html>
