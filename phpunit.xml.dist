@@ -15,6 +15,10 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
+        <php>
+        <!-- the value is the Doctrine connection string in DSN format -->
+        <env name="DATABASE_URL" value="mysql://khafid:sio22@127.0.0.1/seqoia" />
+    </php>
     </php>
 
     <testsuites>

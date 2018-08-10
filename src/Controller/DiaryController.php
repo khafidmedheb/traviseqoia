@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\FoodRecord;
 use App\Entity\User;
@@ -21,7 +22,15 @@ use App\Form\FoodType;
 use App\Form\ContactType;
 
 
-
+/**
+ * Contrôleur gérant l'application "démo" food-diary
+ *
+ * Notes :
+ * 1) Install et config de Fosuserbundle : 
+ *    https://www.supinfo.com/articles/single/5972-installer-configurer-fosuserbundle-symfony-3
+ *
+ * 
+ */
 class DiaryController extends Controller
 {
     
@@ -69,6 +78,7 @@ class DiaryController extends Controller
             ]
         );
     }
+
 
     /**
      * @Route("/diary/add-new-record", name="add-new-record")
@@ -132,7 +142,7 @@ class DiaryController extends Controller
     /**
      * Créer un formulaire de contact
      * 
-     * @Route("/diary/Contact", name="contact")
+     * @Route("/diary/contact", name="contact")
      */
     public function createContactFormAction(Request $request)
     {
@@ -243,5 +253,40 @@ class DiaryController extends Controller
         return $this->render('roles/hello-world-admin.html.twig');
     }
 
+    
+    /**
+     * @Route("/diary/ajax_request", name="ajax_request")
+     * 
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function ajaxRequestAction(Request $request)
+    {
 
+        if ($request->request->get('btnclick')) {
+
+            $selected = $request->request->get('btnclick');
+
+            $arrData = ['output' => 'Vous avez cliqué...',
+                        'btnclick' => $selected];
+
+            return new JsonResponse($arrData);
+        }
+
+        elseif ($request->request->get('choice')) {
+
+            $selected = $request->request->get('choice');
+
+            $menuData = ['output' => 'Vous avez sélectionné ' .$selected,
+                         'success' => true,
+                         'choice' => $selected];
+
+            return new JsonResponse($menuData);
+        }
+
+        return $this->render('diary/ajax/form-ajax.html.twig');
+
+    }
+        
 }

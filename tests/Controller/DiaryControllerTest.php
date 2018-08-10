@@ -19,18 +19,12 @@ use App\Classes\Calculator;
  * 3) Remplissage d'un formulaire
  * 4) Redirection d'un lien hypertexte et contenu de la page
  * 5) Exemples d'assertions (à réadapter pour notre exemple "food-diary")
+ * etc...
+ * Launch Phpunit : $ ./vendor/bin/simple-phpunit --filter=[Nom_de_la_méthode]
  *
- * Launch Phpunit : $ ./vendor/bin/phpunit --filter=testHomepageIsUp [ > web/resultTest.html ]
- *
- * Liste des routes : $ php bin/console debug:router
- *
- * Test de la route homepage : $ php bin/console debug:router homepage
- *
- * Test Phpunit global : $ ./vendor/bin/phpunit.bat
+ * Ou pour le test global : $ ./vendor/bin/simple-phpunit 
  *
  * Assertion : proposition que l'on propose et que l'on soutient comme vraie
- *
- * Config PhpUnit (Symfony 4) : $ composer require --dev symfony/phpunit-bridge
  *
  */
 class DiaryControllerTest extends WebTestCase
@@ -40,11 +34,12 @@ class DiaryControllerTest extends WebTestCase
     private $clientAuth = null;
     private $clientAuthToken = null;
 
-
+                                     //Tests unitaires
+    
     public function testCalculator()
     {
 
-        // Commande : ./vendor/bin/simple-phpunit --filter=testSum
+        // Commande : ./vendor/bin/simple-phpunit --filter=testCalculator
         
         $calculator = new Calculator();
 
@@ -53,9 +48,8 @@ class DiaryControllerTest extends WebTestCase
         $this->assertEquals(42, $result);
     }
 
-    //Vérifier que toutes les URL de l'appli se chargent correctement ("smoke testing")
-    //Attendu : codes status HTTP entre 200 et 299
     
+                                     //Test authentification via FosUserBundle
     /**
      * @dataProvider provideUrls
      */
@@ -63,6 +57,9 @@ class DiaryControllerTest extends WebTestCase
     {
 
         // Commande : ./vendor/bin/simple-phpunit --filter=testPageIsSuccessful
+        
+        //Vérifier que toutes les URL de l'appli se chargent correctement ("smoke testing")
+        //Attendu : codes status HTTP entre 200 et 299
         
         $client = static::createClient();
         $client->request('GET', $url);
@@ -74,103 +71,208 @@ class DiaryControllerTest extends WebTestCase
     {
         return array(
             array('/diary'),
-            array('/diary/list'),
-            array('/diary/add-new-record'),
-            array('/login'),
-            array('/seqoia'),
-            array('/lucky/number'),
-            array('/diary/delete-record'),
+            // array('/diary/list'),
+            // array('/diary/add-new-record'),
+            // array('/login'),
+            // array('/login_check'),
+            // array('/seqoia'),
+            // array('/lucky/number'),
+            // array('/diary/delete-record'),
+            // array('/profile/'),
             // array('/diary/contact'),
             // array('/auth'),
             // array('/logout'),
         );   
     }
-
-
-    //Test authentification via FosUserBundle
-    
-
+                   
+    /**
+     * Création du client web avec les paramètres de connexion
+     * 
+     */
     private function logInAuth()
     {
-    
         $clientAuth = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'khafid',
             'PHP_AUTH_PW'   => 'sio22',
         ));
-
-    }
- 
-    public function setUp()
-    {
-         // $this->clientAuthToken = static::createClient(array('debug' => true));
-
-        $this->clientAuth = static::createClient(array(), array(
-            'PHP_AUTH_USER' => 'khafid',
-            'PHP_AUTH_PW'   => 'sio22',
-        ));
-
     }
 
-    public function testLoginForm ()
-    {
-        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testLoginForm
+                                     
+    /**
+     * Test login via Fosuserbundle
+     * 
+     */
+    // public function testDoLogin()
+    // {
+    //     // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testDoLogin
+        
 
+    //      $data = [
+    //         'username' => 'khafid',
+    //         'Password' =>  'sio22'
+    //     ];
+
+    //     $client = static::createClient();
+
+    //     $client->request(
+    //         'POST', '/login', array(), array(), 
+    //         array(
+    //              'CONTENT_TYPE' => 'application/json',
+    //     ),
+    //         json_encode($data)
+    //     );
+
+    //     $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+    //     // $this->assertTrue($client->getResponse()->isRedirect());
+
+    //     $crawler = $client->followRedirect();
+
+    //     $this->assertContains('Bienvenue sur Symfony 4 !', $client->getResponse()->getContent());
+
+    //     $username = "khafid";
+    //     $password = "sio22";
+        
+    //     $client = static::createClient();
+
+    //     $crawler = $client->request('GET', '/login');
+
+    //     $form = $crawler->filter('form')->form();
+
+    //     $crawler = $client->submit($form, array(
+    //         '_username'  => $username,
+    //         '_password'  => $password,
+    //     )); 
+
+    //     dump($form); die();
+
+    //    $client->submit($form);
+
+    //    $this->assertTrue($client->getResponse()->isRedirect());
+
+    //    $crawler = $client->followRedirect();
+
+    //    Test soumission formulaire
+    //    $this->assertRegexp('/Invalid credentials?/', $crawler->filter('div.alert.alert-success')->first()->text());
+    //    $this->assertContains('Bienvenue sur Symfony 4 !', $client->getResponse()->getContent());
+    //     $username = "";
+    //     $password = "";
+
+    //     $client = static::createClient();
+
+    //     $client->request(
+    //         'POST', 
+    //         '/login', 
+    //         array(), 
+    //         array(), 
+    //         array(
+    //              'CONTENT_TYPE' => 'application/json',
+    //              'PHP_AUTH_USER' => $username,
+    //              'PHP_AUTH_PW4' => $password,
+    //         )
+    //     );
+
+    //     $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    // }
+
+
+                                       //Tests sur le register
+
+
+    /**
+     * Test l'enregistrement d'un nouvel utilisateur depuis le register de Fosuserbundle
+     * 
+     */
+    public function testRegisterNewUser()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUser
+
+        $data = [
+            'email' =>'khalid.hafid-medheb@integragen.com',
+            'username' => 'TITUS',
+            'plainPassword' => [
+                'first' => 'TOTO1506', 'second' => 'TOTO1506'
+            ]
+        ];
+
+        $client = $this->fillPOSTRequest($data);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test un Register vide
+     *
+     */
+    public function testEmptyRegister()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testEmptyRegister
+
+        $data = [
+            'email' => '',
+            'username' => '',
+            'plainPassword' => [
+                'first' => '', 'second' => ''
+            ]
+
+        ];
+
+        $client = $this->fillPOSTRequest($data);
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test d'un user avec email invalide -> affichage d'une erreur 400
+     *
+     */
+    public function testRegisterNewUserWithInvalidMail()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUserWithInvalidMail
+
+        $data = [
+            'email' => 'khalid.hafid-medhebintegragen.com',
+            'username' => 'TITI',
+            'plainPassword' => [
+                'first' => 'TOTO1506', 'second' => 'TOTO1506'
+            ]
+
+        ];
+
+        $client = $this->fillPOSTRequest($data);
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+
+
+    /**
+     * Remplissage automatique des données du formulaire "Register"
+     */
+    private function fillPOSTRequest($data)
+    {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/login');
-
-        // dump($crawler); die();
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-
-        // Test formulaire vide
-        $form = $crawler->selectButton('Log in')->form();
-
-        $form->setValues(array(
-            'login[_username]' => 'khafid',
-            'login[_password]' => 'sio22',
-            )
+        $client->request(
+            'POST', '/register/', array(), array(), 
+            array(
+                 'CONTENT_TYPE' => 'application/json',
+        ),
+            json_encode($data)
         );
 
-        $client->submit($form);
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-    }
-
-   
-    public function testLoginWithToken()
-    {
-        
-        // ./vendor/bin/simple-phpunit --filter=testLoginWithToken
-
-        $this->logIn();
-
-        // $this->logInFaster();
-
-        // Interrogation de la page de bienvenue
-        $crawler = $this->clientAuth->request('GET', '/');
- 
-        $this->assertEquals(
-            'App\Controller\DiaryController::index',
-            $this->clientAuth->getRequest()->attributes->get('_controller')
-        );
- 
-        // Verification http de la redirection.
-        $this->assertSame(Response::HTTP_OK, $this->clientAuth->getResponse()->getStatusCode());
-
-        // $this->assertSame(302, $this->client->getResponse()->getStatusCode());
- 
-        // Verification si c'est la bonne page.
-        $this->assertContains('Bienvenue sur Symfony 4 !', $this->clientAuth->getResponse()->getContent());
+        return $client;
 
     }
+                           
 
-    public function testLogin()
+                                     //Test authentification via FosUserBundle
+
+
+    public function testAuthentication()
     {
         
-        // ./vendor/bin/simple-phpunit --filter=testLogin
-
-        // $this->logInAuth();
+        // ./vendor/bin/simple-phpunit --filter=testAuthentication
     
         $clientAuth = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'khafid',
@@ -182,12 +284,6 @@ class DiaryControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'sio22',
         ));
 
-        // $this->logIn();
-
-        // dump($this->logInFaster()); die();
-
-        // Interrogation de la page de bienvenue
-        // $crawler = $this->client->request('GET', '/');
  
         $this->assertEquals(
             'App\Controller\DiaryController::index',
@@ -195,16 +291,107 @@ class DiaryControllerTest extends WebTestCase
         );
  
         // Verification http de la redirection.
-        // $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
-
-        $this->assertSame(302, $clientAuth->getResponse()->getStatusCode());
+        $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
  
         // Verification si c'est la bonne page.
         $this->assertContains('Bienvenue sur Symfony 4 !', $clientAuth->getResponse()->getContent());
 
+
+        //Homepage Diary
+        $crawler = $clientAuth->request('GET', '/diary', array(), array(), array(
+            'PHP_AUTH_USER' => 'khafid',
+            'PHP_AUTH_PW'   => 'sio22',
+        ));
+
+ 
+        $this->assertEquals(
+            'App\Controller\DiaryController::indexDiary',
+            $clientAuth->getRequest()->attributes->get('_controller')
+        );
+ 
+        // Verification http de la redirection.
+        $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
+ 
+        // Verification si c'est la bonne page.
+        $this->assertContains('Bienvenue sur FoodDiary !', $clientAuth->getResponse()->getContent());
+
+
+        //Liste des repas -> HS
+        $crawler = $clientAuth->request('GET', '/diary/list', array(), array(), array(
+            'PHP_AUTH_USER' => 'khafid',
+            'PHP_AUTH_PW'   => 'sio22',
+        ));
+
+ 
+        $this->assertEquals(
+            'App\Controller\DiaryController::listAction',
+            $clientAuth->getRequest()->attributes->get('_controller')
+        );
+ 
+        // Verification http de la redirection.
+        // $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
+ 
+        // Verification si c'est la bonne page.
+        // $this->assertContains('Liste de tous les rapports', $clientAuth->getResponse()->getContent());
+
+
+        //Page de contact
+        $crawler = $clientAuth->request('GET', '/diary/contact', array(), array(), array(
+            'PHP_AUTH_USER' => 'khafid',
+            'PHP_AUTH_PW'   => 'sio22',
+        ));
+
+ 
+        $this->assertEquals(
+            'App\Controller\DiaryController::createContactFormAction',
+            $clientAuth->getRequest()->attributes->get('_controller')
+        );
+ 
+        // Verification http de la redirection.
+        $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
+ 
+        // Verification si c'est la bonne page.
+        $this->assertContains('Formulaire de contact', $clientAuth->getResponse()->getContent());
+
     }
+
+
+    public function setUp()
+    {
+         // $this->clientAuthToken = static::createClient(array('debug' => true));
+
+        $this->clientAuth = static::createClient(array(), array(
+            'PHP_AUTH_USER' => 'khafid',
+            'PHP_AUTH_PW'   => 'sio22',
+        ));
+
+    }
+
+
+    public function testLoginWithToken()
+    {
+        
+        // ./vendor/bin/simple-phpunit --filter=testLoginWithToken
+
+        $this->logIn();
+
+        // Interrogation de la page de bienvenue
+        $crawler = $this->clientAuth->request('GET', '/');
  
+        $this->assertEquals(
+            'App\Controller\DiaryController::index',
+            $this->clientAuth->getRequest()->attributes->get('_controller')
+        );
  
+        // Verification http de la redirection.
+        $this->assertSame(Response::HTTP_OK, $this->clientAuth->getResponse()->getStatusCode());
+ 
+        // Verification si c'est la bonne page.
+        $this->assertContains('Bienvenue sur Symfony 4 !', $this->clientAuth->getResponse()->getContent());
+
+    }
+
+    
     private function logIn()
     {
         $session = $this->clientAuth->getContainer()->get('session');
@@ -221,35 +408,10 @@ class DiaryControllerTest extends WebTestCase
     }
 
 
-    // public function testAdmin()
-    // {
-    //     $this->logIn();
-
-    //     // Interrogation de la page.
-    //     $crawler = $this->client->request('GET', '/admin');
- 
-    //     $this->assertEquals(
-    //         'CP\CoreBundle\Controller\DefaultController::guidesAction',
-    //         $this->client->getRequest()->attributes->get('_controller')
-    //     );
- 
-    //     // Verification http code 302 (Redirection auth).
-    //     //$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
- 
-    //     $crawler = $this->client->request('GET', '/test/search');
-    //     echo " - ".$this->client->getResponse()->getStatusCode();
- 
-    //     // Verification http code 302 (Redirection auth).
-    //     $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
- 
-    //     // Verification si c'est la bonne page.
-    //     $this->assertContains('Guide', $this->client->getResponse()->getContent());
- 
- 
-    // }
-
+                                    //Test du chargement et du contenu de la Homepage
+    
     /**
-     * Test du chargement et du contenu de la Homepage
+     * Teste le contenu de la homepage
      * 
      */
     public function testHomepageContent()
@@ -340,8 +502,6 @@ class DiaryControllerTest extends WebTestCase
 
         //Tests sur liste
         //$heading = $crawler->filter('h1')->eq(0)->text();
-        
-
         
         $this->assertRegExp('/Copyright?/', $client->getResponse()->getContent());
 
@@ -487,6 +647,8 @@ class DiaryControllerTest extends WebTestCase
         //Test si le titre principal est 'Liste de tous les rapports'
         $this->assertEquals('Liste de tous les rapports', $listPage->filter('h1')->first()->text());
 
+        //Pour la démo -> bug à l'écran : An exception occurred in driver: SQLSTATE[HY000] [2002] Aucune connexion n�a pu �tre �tablie car l�ordinateur cible l�a express�ment refus�e.
+
 
         //Test 1 si aucun rapport n'est affiché
         // $this->assertEquals('Aucune entrée dans le journal pour l\'instant.', $listPage->filter('p')->first()->text());
@@ -494,7 +656,6 @@ class DiaryControllerTest extends WebTestCase
         //Test 2 si aucun rapport n'est affiché
         // $this->assertEquals('Ajouter une nouvelle entrée', $listPage->filter('a:contains("Ajouter une nouvelle entrée")')->first()->text());
        
-
         //Test lien "Contact"
         $linkContact = $crawler->filter('a:contains("Contact")')->first()->link();
 
@@ -664,6 +825,7 @@ class DiaryControllerTest extends WebTestCase
         $client->submit($form);
 
         $this->assertSame(302, $client->getResponse()->getStatusCode());
+        //Erreur ici : on attend 500 -> le form n'est pas validée : An exception occurred in driver: SQLSTATE[HY000] [2002] Aucune connexion n�a pu �tre �tablie car l�ordinateur cible l�a express�ment refus�e.
 
     }
 
@@ -851,8 +1013,83 @@ class DiaryControllerTest extends WebTestCase
     }
 
 
+                          //Test : codes Jquery avec Ajax
+    /**
+     * Test du bouton "Ajax"
+     * 
+     */
+    public function testButtonAjax()
+    {
 
+        // Commande : ./vendor/bin/simple-phpunit --filter=testButtonAjax
+        
+        $client = static::createClient();
 
-                          //Test : Authentification
-    
+        $crawler = $client->request('GET', '/diary/ajax_request');
+
+        // Code status 200 renvoyé (chargement de la page)
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $this->assertEquals('Click me !', $crawler->filter('button.ajax')->first()->text());
+        
+        $this->assertEquals('Here comes the result', $crawler->filter('div#ajax-results')->first()->text());
+ 
+        $dataTest = ['choice' => 67655];
+       
+        $clientAjax = static::createClient();
+
+        $client->request(
+            'POST',
+            '/diary/ajax_request',
+            $dataTest,
+            array(),
+            array('CONTENT_TYPE' => 'application/json')
+        );
+
+        $JSON_response = json_decode($client->getResponse()->getContent(), true);
+
+        // $this->assertEquals($JSON_response["output"], 100);
+        $this->assertEquals($JSON_response["success"], true);
+        $this->assertEquals($JSON_response["choice"], 67655);
+        // $this->assertRegExp('/Vous avez sélectionné ?/', $JSON_response["output"]);
+        // $this->assertEquals('Vous avez cliqué...', $crawler->filter('div#ajax-results')->first()->text());
+
+    }
+
+    /**
+     * Test du menu déroulant "Ajax"
+     * 
+     */
+    public function testMenuAjax()
+    {
+
+        // Commande : ./vendor/bin/simple-phpunit --filter=testMenuAjax
+        
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/diary/ajax_request');
+
+        // Code status 200 renvoyé (chargement de la page)
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $this->assertContains('Liste déroulante test Ajax !', $crawler->filter('h2')->first()->text());
+ 
+        $dataTest = ['btnclick' => 'Cliquez !'];
+       
+        $clientAjax = static::createClient();
+
+        $client->request(
+            'POST',
+            '/diary/ajax_request',
+            $dataTest,
+            array(),
+            array('CONTENT_TYPE' => 'application/json')
+        );
+
+        $JSON_response = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($JSON_response["btnclick"], "Cliquez !" );
+        $this->assertRegExp('/Vous avez cliqué...?/', $JSON_response["output"]);
+
+    }
 }
