@@ -1045,7 +1045,7 @@ class DiaryControllerTest extends WebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-
+        
         $JSON_response = json_decode($client->getResponse()->getContent(), true);
 
         // $this->assertEquals($JSON_response["output"], 100);
