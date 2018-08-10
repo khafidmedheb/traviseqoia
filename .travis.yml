@@ -1,7 +1,8 @@
-langage: php
+language: php
 php:
   - '7.0'
   - '7.1'
+
 script:
-  - composer install
-  - ./vendor/bin/simple-phpunit
+   - composer install
+   - vendor/bin/phpunit
