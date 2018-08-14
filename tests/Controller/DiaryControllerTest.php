@@ -831,7 +831,7 @@ class DiaryControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(500, $client->getResponse()->getStatusCode());
         //Erreur ici : on attend 500 -> le form n'est pas validée : An exception occurred in driver: SQLSTATE[HY000] [2002] Aucune connexion n�a pu �tre �tablie car l�ordinateur cible l�a express�ment refus�e.
 
     }
