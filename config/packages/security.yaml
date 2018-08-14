@@ -18,8 +18,8 @@ security:
             memory:
                 users:
                     khafid: { password: sio22 }
-        #user_db:
-            #entity: { class: App\Entity\User, property: username }
+        # user_db:
+        #     entity: { class: App\Entity\User, property: username }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
