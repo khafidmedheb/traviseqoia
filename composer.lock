@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84b1d074cd2d40c0c674494f50a51b66",
+    "content-hash": "b599ac15932f51817b4d05c5480be4ce",
     "packages": [
         {
             "name": "composer/semver",
@@ -6660,6 +6660,48 @@
                 "php"
             ],
             "time": "2018-07-15T17:25:16+00:00"
+        },
+        {
+            "name": "refinery29/php-cs-fixer-config",
+            "version": "0.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/refinery29/php-cs-fixer-config.git",
+                "reference": "3fc42c1d5568230b648b35fefe9a88629cb3e9bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/refinery29/php-cs-fixer-config/zipball/3fc42c1d5568230b648b35fefe9a88629cb3e9bd",
+                "reference": "3fc42c1d5568230b648b35fefe9a88629cb3e9bd",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofphp/php-cs-fixer": "^2.3.2",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "0.4.4",
+                "phpunit/phpunit": "^5.7.19",
+                "refinery29/test-util": "0.11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Refinery29\\CS\\Config\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Möller",
+                    "email": "andreas.moller@refinery29.com"
+                }
+            ],
+            "description": "Provides configurations for friendsofphp/php-cs-fixer, used within Refinery29.",
+            "time": "2017-05-29T12:26:01+00:00"
         },
         {
             "name": "sensiolabs/security-checker",

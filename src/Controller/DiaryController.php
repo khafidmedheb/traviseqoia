@@ -5,35 +5,22 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use App\Entity\FoodRecord;
 use App\Entity\User;
 use App\Entity\Contact;
 use App\Form\FoodType;
 use App\Form\ContactType;
 
-
 /**
- * Contrôleur gérant l'application "démo" food-diary
- *
- *
- * 
+ * Contrôleur gérant l'application "démo" food-diary.
  */
 class DiaryController extends Controller
 {
-    
-   /**
-     * Homepage de Symfony appli
-     * 
+    /**
+     * Homepage de Symfony appli.
+     *
      * @Route("/", name="symfo")
      */
     public function index()
@@ -43,10 +30,9 @@ class DiaryController extends Controller
         ]);
     }
 
-
     /**
-     * Homepage de Diary
-     * 
+     * Homepage de Diary.
+     *
      * @Route("/diary", name="homepage")
      */
     public function indexDiary()
@@ -61,7 +47,6 @@ class DiaryController extends Controller
      */
     public function listAction()
     {
-
         $repository = $this->getDoctrine()->getRepository('App:FoodRecord');
 
         return $this->render(
@@ -69,13 +54,12 @@ class DiaryController extends Controller
             [
                 'records' => $repository->findBy(
                     [
-                        'recordedAt' => new \Datetime()
+                        'recordedAt' => new \Datetime(),
                     ]
-                )
+                ),
             ]
         );
     }
-
 
     /**
      * @Route("/diary/add-new-record", name="add-new-record")
@@ -100,8 +84,7 @@ class DiaryController extends Controller
         return $this->render('diary/addRecord.html.twig', ['form' => $form->createView()]);
     }
 
-
-     /**
+    /**
      * @Route("/diary/delete-record", name="record")
      */
     public function deleteRecordAction(Request $request)
@@ -135,10 +118,9 @@ class DiaryController extends Controller
         );
     }
 
-    
     /**
-     * Créer un formulaire de contact
-     * 
+     * Créer un formulaire de contact.
+     *
      * @Route("/diary/contact", name="contact")
      */
     public function createContactFormAction(Request $request)
@@ -148,13 +130,12 @@ class DiaryController extends Controller
 
         $form->handleRequest($request);
 
-        # Check si le formulaire est soumis
+        // Check si le formulaire est soumis
         if ($form->isSubmitted() && $form->isValid()) {
-
             $name = $form['nom']->getData();
             $email = $form['email']->getData();
             $subject = $form['sujet']->getData();
-            $message = $form['message']->getData(); 
+            $message = $form['message']->getData();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
@@ -162,7 +143,7 @@ class DiaryController extends Controller
 
             $this->addFlash('success', 'Un nouveau contact a bien été ajouté.');
 
-            $myappContactMail = "khalid.hafid-medheb@integragen.com";
+            $myappContactMail = 'khalid.hafid-medheb@integragen.com';
 
             // $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 587,'tls')->setUsername('khalid.hafid-medheb@integragen.com')->setPassword('Th3sard1506');
 
@@ -176,36 +157,36 @@ class DiaryController extends Controller
 
             //Redirection vers le formulaire de contact
             return $this->redirectToRoute('contact');
-            
         }
 
         return $this->render('diary/contact.html.twig', ['form' => $form->createView()]);
     }
 
-    private function sendEmail($data){
-        $myappContactMail = "khalid.hafid-medheb@integragen.com";
-        $myappContactPassword = "Thesard1506";
+    private function sendEmail($data)
+    {
+        $myappContactMail = 'khalid.hafid-medheb@integragen.com';
+        $myappContactPassword = 'Thesard1506';
 
         //Récupération des infos saisies
         // $name = $form['nom']->getData();
         // $email = $form['email']->getData();
         // $subject = $form['sujet']->getData();
         // $message = $form['message']->getData();
-        
+
         $message = \Swift_Message::newInstance()
 
-                        ->setSubject($data["subject"])
-                        ->setFrom(array($myappContactMail => "Message by ".$data["name"]))
-                        ->setTo($data["email"])
-                        ->setBody($this->renderView('diary/sendemail.html.twig', 
-                            array('name' => $data["name"])), 'text/html');
+                        ->setSubject($data['subject'])
+                        ->setFrom(array($myappContactMail => 'Message by '.$data['name']))
+                        ->setTo($data['email'])
+                        ->setBody($this->renderView('diary/sendemail.html.twig',
+                            array('name' => $data['name'])), 'text/html');
 
-        $this->get('mailer')->send($data["message"]);
+        $this->get('mailer')->send($data['message']);
     }
 
-
     /**
-     * Pour  tester le ROLE_USER
+     * Pour  tester le ROLE_USER.
+     *
      * @Route("/user/test", name="testRoleUser")
      */
     public function testRoleAction(Request $request)
@@ -214,7 +195,8 @@ class DiaryController extends Controller
     }
 
     /**
-     * Pour  tester le ROLE_ADMIN
+     * Pour  tester le ROLE_ADMIN.
+     *
      * @Route("/admin", name="admin")
      */
     public function testAdminAction(Request $request)
@@ -231,9 +213,9 @@ class DiaryController extends Controller
         return $this->render('admin/admin.html.twig');
     }
 
-
     /**
-     * Pour  tester le ROLE_ADMIN
+     * Pour  tester le ROLE_ADMIN.
+     *
      * @Route("/admin/test", name="testRoleAdmin")
      */
     public function testRoleAdminAction(Request $request)
@@ -250,40 +232,32 @@ class DiaryController extends Controller
         return $this->render('roles/hello-world-admin.html.twig');
     }
 
-    
     /**
      * @Route("/diary/ajax_request", name="ajax_request")
-     * 
+     *
      * @param Request $request
      *
      * @return View
      */
     public function ajaxRequestAction(Request $request)
     {
-
         if ($request->request->get('btnclick')) {
-
             $selected = $request->request->get('btnclick');
 
             $arrData = ['output' => 'Vous avez cliqué...',
-                        'btnclick' => $selected];
+                        'btnclick' => $selected, ];
 
             return new JsonResponse($arrData);
-        }
-
-        elseif ($request->request->get('choice')) {
-
+        } elseif ($request->request->get('choice')) {
             $selected = $request->request->get('choice');
 
-            $menuData = ['output' => 'Vous avez sélectionné ' .$selected,
+            $menuData = ['output' => 'Vous avez sélectionné '.$selected,
                          'success' => true,
-                         'choice' => $selected];
+                         'choice' => $selected, ];
 
             return new JsonResponse($menuData);
         }
 
         return $this->render('diary/ajax/form-ajax.html.twig');
-
     }
-        
 }

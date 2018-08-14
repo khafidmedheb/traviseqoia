@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Contact
+ * Contact.
  *
  * @ORM\Table(name="contact")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
@@ -49,9 +49,8 @@ class Contact
      */
     private $message;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -61,7 +60,7 @@ class Contact
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -75,7 +74,7 @@ class Contact
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -85,7 +84,7 @@ class Contact
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      *
@@ -99,7 +98,7 @@ class Contact
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -109,7 +108,7 @@ class Contact
     }
 
     /**
-     * Set subject
+     * Set subject.
      *
      * @param string $subject
      *
@@ -123,7 +122,7 @@ class Contact
     }
 
     /**
-     * Get subject
+     * Get subject.
      *
      * @return string
      */
@@ -133,7 +132,7 @@ class Contact
     }
 
     /**
-     * Set message
+     * Set message.
      *
      * @param string $message
      *
@@ -147,7 +146,7 @@ class Contact
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return string
      */
@@ -156,4 +155,3 @@ class Contact
         return $this->message;
     }
 }
-

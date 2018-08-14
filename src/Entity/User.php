@@ -1,4 +1,5 @@
 <?php
+
 // src/Entity/User.php
 
 namespace App\Entity;
@@ -36,7 +37,7 @@ class User extends BaseUser
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=testQuery
 
-        $nom = "Toto";
+        $nom = 'Toto';
 
         $users = $this->getDoctrine()
             ->getRepository(User::class)

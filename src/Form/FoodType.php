@@ -22,7 +22,7 @@ class FoodType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\FoodRecord'
+            'data_class' => 'App\Entity\FoodRecord',
         ));
     }
 }

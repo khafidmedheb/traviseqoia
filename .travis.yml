@@ -5,6 +5,12 @@ php:
 script:
    - composer install
    - ./vendor/bin/simple-phpunit
+   # A tool to automatically fix PHP coding standards issues
+   - php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
+
+cache:
+  directories:
+    - $HOME/.php-cs-fixer
 
 # Define an environment variable
 env:

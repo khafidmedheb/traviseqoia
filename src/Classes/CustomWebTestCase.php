@@ -11,20 +11,20 @@ use Symfony\Component\Security\Core\User\User;
 
 abstract class CustomWebTestCase extends WebTestCase
 {
-
     /**
      * @param array|null $roles
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
-    protected static function createAuthenticatedClient(array $roles = null) {
+    protected static function createAuthenticatedClient(array $roles = null)
+    {
         // Assign default user roles if no roles have been passed.
-        if($roles == null) {
+        if (null == $roles) {
             $role = new Role('ROLE_SUPER_ADMIN');
             $roles = array($role);
         } else {
             $tmpRoles = array();
-            foreach($roles as $role)
-            {
+            foreach ($roles as $role) {
                 $role = new Role($role, $role);
                 $tmpRoles[] = $role;
             }
@@ -36,7 +36,8 @@ abstract class CustomWebTestCase extends WebTestCase
         return self::createAuthentication(static::createClient(), $user);
     }
 
-    private static function createAuthentication(Client $client, User $user) {
+    private static function createAuthentication(Client $client, User $user)
+    {
         // Read below regarding config_test.yml!
         $session = $client->getContainer()->get('session');
 
@@ -53,4 +54,3 @@ abstract class CustomWebTestCase extends WebTestCase
         return $client;
     }
 }
-
