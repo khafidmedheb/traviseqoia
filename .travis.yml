@@ -2,11 +2,18 @@ language: php
 php:
   - '7.1'
 
+services:
+  - mysql
+  #- elasticsearch
+  #
+before_install:
+  - mysql -u root --password="root" < tests/seqoia34.sql
+
 script:
    - composer install
    - ./vendor/bin/simple-phpunit
    # A tool to automatically fix PHP coding standards issues
-   - php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
+   - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
 
 cache:
   directories:

@@ -55,7 +55,7 @@ class UserRepositoryTest extends KernelTestCase
     {
     	// Commande : ./vendor/bin/simple-phpunit --filter=testFindAllUsers
     	
-    	$resultExpected = 7;
+    	$resultExpected = 9;
 
     	$users = $this->entityManager
     	    ->getRepository(User::class)
@@ -68,7 +68,7 @@ class UserRepositoryTest extends KernelTestCase
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=testListUsers
 
-        $resultExpected = 7;
+        $resultExpected = 9;
 
     	$users = $this->entityManager
     	    ->getRepository(User::class)
@@ -91,29 +91,26 @@ class UserRepositoryTest extends KernelTestCase
 		// $this->assertEquals($resultExpected, $users);
   //   }
 
-    public function test_get_seven_users()
+    public function test_get_nine_users()
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=test_get_six_users
        
         $users = $this->entityManager->getRepository(User::class)->findAll();
 
-        $this->assertEquals(7, count($users));
+        $this->assertEquals(9, count($users));
     }
 
-    // public function testAdminTotoIsPresent()
-    // {
-    //     // Commande : ./vendor/bin/simple-phpunit --filter=testAdminTotoIsPresent
+    public function testAdminTotoIsPresent()
+    {
+        // Commande : ./vendor/bin/simple-phpunit --filter=testAdminTotoIsPresent
        
-    //     $users = $this->entityManager
-    //         ->getRepository(User::class)
-    //         ->verifyAdminTotoIsRegistered('Toto', 'toto@gmail.com');
+        $users = $this->entityManager
+            ->getRepository(User::class)
+            ->verifyAdminTotoIsRegistered("Toto", "toto@gmail.com");
 
-    //         dump($users); die();
-
-    //     $this->assertTrue($users, "Toto is here !");
-    // }
+        $this->assertCount(1, $users);
+    }
     
-
   
 	/**
 	 * {@inheritDoc}

@@ -62,6 +62,7 @@ class UserRepository extends EntityRepository
 
         $result = $this->getEntityManager()
             ->createQuery($sql)
+            ->setParameters(array("name" => $name))
             ->getResult();
 
         return $result;
@@ -77,10 +78,11 @@ class UserRepository extends EntityRepository
      */
     public function verifyAdminTotoIsRegistered($name, $email)
     {
-        $sql = 'SELECT u FROM App:User u WHERE u.username = :name AND u.email = :email';
+        $sql = 'SELECT u FROM App:User u WHERE u.username = :name AND u.email = :email ';
 
         $result = $this->getEntityManager()
             ->createQuery($sql)
+            ->setParameters(array("name" => $name, "email" => $email))
             ->getResult();
 
         return $result;

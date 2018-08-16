@@ -180,97 +180,240 @@ class DiaryControllerTest extends WebTestCase
 
 
     /**
+     * Test l'enregistrement d'un nouvel utilisateur depuis le register de Fosuserbundle via la requête Json
+     * 
+     */
+    // public function testRegisterNewUserViaJsonRequest()
+    // {
+    //     // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUserViaJsonRequest
+
+    //     $data = [
+    //         'email' =>'khalid.hafid-medheb@integragen.com',
+    //         'username' => 'TITUS',
+    //         'plainPassword' => [
+    //             'first' => 'TOTO1506', 'second' => 'TOTO1506'
+    //         ]
+    //     ];
+
+    //     $client = $this->fillPOSTRequest($data);
+
+    //     $JSON_response = json_decode($client->getResponse()->getContent(), true);
+
+    //     $this->assertEquals($JSON_response["email"], "khalid.hafid-medheb@integragen.com" );
+    //     $this->assertEquals($JSON_response["username"], "TITUS" );
+    //     $this->assertEquals($JSON_response["plainPassword"]["first"], "TOTO1506" );
+    //     $this->assertEquals($JSON_response["plainPassword"]["second"], "TOTO1506" );
+
+    //     $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    // }
+
+    /**
+     * Test d'un register vide
+     * 
+     */
+    public function testEmptyRegister()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testEmptyRegister
+        
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/register/');
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        
+        // Remplissage du formulaire
+        $form = $crawler->selectButton('Register')->form();
+
+        $form->setValues(array(
+            'fos_user_registration_form[email]' => '',
+            'fos_user_registration_form[username]' => '',
+            'fos_user_registration_form[plainPassword][first]' => '',
+            'fos_user_registration_form[plainPassword][second]' => '',
+            )
+        );
+
+        $client->submit($form);
+
+        //Pas de redirection : un code status 200 au lieu de 302
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+    }
+
+
+    /**
      * Test l'enregistrement d'un nouvel utilisateur depuis le register de Fosuserbundle
      * 
      */
     public function testRegisterNewUser()
     {
         // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUser
+        
+        $client = static::createClient();
 
-        $data = [
-            'email' =>'khalid.hafid-medheb@integragen.com',
-            'username' => 'TITUS',
-            'plainPassword' => [
-                'first' => 'TOTO1506', 'second' => 'TOTO1506'
-            ]
-        ];
+        $crawler = $client->request('GET', '/register/');
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        
+        // Remplissage du formulaire
+        $form = $crawler->selectButton('Register')->form();
 
-        $client = $this->fillPOSTRequest($data);
+        $form->setValues(array(
+            'fos_user_registration_form[email]' => 'test2@gmail.com',
+            'fos_user_registration_form[username]' => 'Test nom 2',
+            'fos_user_registration_form[plainPassword][first]' => 'toto',
+            'fos_user_registration_form[plainPassword][second]' => 'toto',
+            )
+        );
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $client->submit($form);
+
+        //Test du submit du formulaire
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
+    }
+
+
+    /**
+     * Test l'enregistrement d'un nouvel utilisateur depuis le register de Fosuserbundle
+     * 
+     */
+    public function testRegisterNewUserWithInvalidMail()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUserWithInvalidMail
+        
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/register/');
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        
+        // Remplissage du formulaire
+        $form = $crawler->selectButton('Register')->form();
+
+        $form->setValues(array(
+            'fos_user_registration_form[email]' => 'test2gmail.com',
+            'fos_user_registration_form[username]' => 'Test nom 2',
+            'fos_user_registration_form[plainPassword][first]' => 'toto',
+            'fos_user_registration_form[plainPassword][second]' => 'toto',
+            )
+        );
+
+        $client->submit($form);
+
+        //Test du submit du formulaire
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Quand l'email existe déjà, le formulaire
+     * 
+     */
+    public function testRegisterWithMailAndNameAlreadyUsed()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterWithMailAndNameAlreadyUsed
+        
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/register/');
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        
+        // Remplissage du formulaire
+        $form = $crawler->selectButton('Register')->form();
+
+        $form->setValues(array(
+            'fos_user_registration_form[email]' => 'test2@gmail.com',
+            'fos_user_registration_form[username]' => 'Test nom 2',
+            'fos_user_registration_form[plainPassword][first]' => 'toto',
+            'fos_user_registration_form[plainPassword][second]' => 'toto',
+            )
+        );
+
+        $client->submit($form);
+
+        //Test du submit du formulaire
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $this->assertContains('The email is already used.', $client->getResponse()->getContent());
+        $this->assertContains('The username is already used.', $client->getResponse()->getContent());
+
     }
 
     /**
      * Test un Register vide
      *
      */
-    public function testEmptyRegister()
-    {
-        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testEmptyRegister
+    // public function testEmptyRegisterViaJsonRequest()
+    // {
+    //     // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testEmptyRegisterViaJsonRequest
 
-        $data = [
-            'email' => '',
-            'username' => '',
-            'plainPassword' => [
-                'first' => '', 'second' => ''
-            ]
+    //     $data = [
+    //         'email' => '',
+    //         'username' => '',
+    //         'plainPassword' => [
+    //             'first' => '', 'second' => ''
+    //         ]
 
-        ];
+    //     ];
 
-        $client = $this->fillPOSTRequest($data);
+    //     $client = $this->fillPOSTRequest($data);
 
-        $JSON_response = json_decode($client->getResponse()->getContent(), true);
+    //     $JSON_response = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertEquals($JSON_response["email"], "" );
-        $this->assertEquals($JSON_response["username"], "" );
-        $this->assertEquals($JSON_response["plainPassword"], "" );
-        $this->assertEquals($JSON_response["first"], "" );
-        $this->assertEquals($JSON_response["second"], "" );
+    //     $this->assertEquals($JSON_response["email"], "" );
+    //     $this->assertEquals($JSON_response["username"], "" );
+    //     $this->assertEquals($JSON_response["plainPassword"], "" );
+    //     $this->assertEquals($JSON_response["first"], "" );
+    //     $this->assertEquals($JSON_response["second"], "" );
 
-    }
+    //     //Pas de redirection : un code status 200 au lieu de 302
+    //     $this->assertSame(200, $client->getResponse()->getStatusCode());
 
+    // }
+
+    
     /**
      * Test d'un user avec email invalide -> affichage d'une erreur 400
      *
      */
-    public function testRegisterNewUserWithInvalidMail()
-    {
-        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUserWithInvalidMail
+    // public function testRegisterNewUserWithInvalidMail()
+    // {
+    //     // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testRegisterNewUserWithInvalidMail
 
-        $data = [
-            'email' => 'khalid.hafid-medhebintegragen.com',
-            'username' => 'TITI',
-            'plainPassword' => [
-                'first' => 'TOTO1506', 'second' => 'TOTO1506'
-            ]
+    //     $data = [
+    //         'email' => 'khalid.hafid-medhebintegragen.com',
+    //         'username' => 'TITI',
+    //         'plainPassword' => [
+    //             'first' => 'TOTO1506', 'second' => 'TOTO1506'
+    //         ]
 
-        ];
+    //     ];
 
-        $client = $this->fillPOSTRequest($data);
+    //     $client = $this->fillPOSTRequest($data);
 
-        // $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
+    //     $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+    //     $JSON_response = json_decode($client->getResponse()->getContent(), true);
+
+    //     $this->assertEquals($JSON_response["email"], "khalid.hafid-medhebintegragen.com" );
+    //     $this->assertEquals($JSON_response["username"], "TITI" );
+    //     $this->assertEquals($JSON_response["plainPassword"]["first"], "TOTO1506" );
+    //     $this->assertEquals($JSON_response["plainPassword"]["second"], "TOTO1506" );
+    // }
 
 
     /**
      * Remplissage automatique des données du formulaire "Register"
      */
-    private function fillPOSTRequest($data)
-    {
-        $client = static::createClient();
+    // private function fillPOSTRequest($data)
+    // {
+    //     $client = static::createClient();
 
-        $client->request(
-            'POST', '/register/', array(), array(), 
-            array(
-                 'CONTENT_TYPE' => 'application/json',
-        ),
-            json_encode($data)
-        );
+    //     $client->request(
+    //         'POST', '/register/', array(), array(), 
+    //         array(
+    //              'CONTENT_TYPE' => 'application/json',
+    //     ),
+    //         json_encode($data)
+    //     );
 
-        return $client;
+    //     return $client;
 
-    }
+    // }
                            
 
                                      //Test authentification via FosUserBundle
@@ -336,10 +479,10 @@ class DiaryControllerTest extends WebTestCase
         );
  
         // Verification http de la redirection.
-        // $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
+        $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
  
         // Verification si c'est la bonne page.
-        // $this->assertContains('Liste de tous les rapports', $clientAuth->getResponse()->getContent());
+        $this->assertContains('Liste de tous les rapports', $clientAuth->getResponse()->getContent());
 
 
         //Page de contact
@@ -600,7 +743,12 @@ class DiaryControllerTest extends WebTestCase
         );
 
         $this->assertContains(
-            'Liste des rapports', 
+            'Ajax', 
+            $client->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'Contact', 
             $client->getResponse()->getContent()
         );
    
@@ -649,32 +797,36 @@ class DiaryControllerTest extends WebTestCase
         //Simulation du clic et ouverture de la page correspondante
         $listPage = $client->click($link);
 
-        // dump($listPage->filter('h1')->first()->text());die;
-
         //Test si le titre principal est 'Liste de tous les rapports'
-        // $this->assertEquals('Liste de tous les rapports', $listPage->filter('h1')->first()->text());
-
-        //Pour la démo -> bug à l'écran : An exception occurred in driver: SQLSTATE[HY000] [2002] Aucune connexion n�a pu �tre �tablie car l�ordinateur cible l�a express�ment refus�e.
-
+        $this->assertEquals('Liste de tous les rapports', $listPage->filter('h1')->first()->text());
 
         //Test 1 si aucun rapport n'est affiché
-        // $this->assertEquals('Aucune entrée dans le journal pour l\'instant.', $listPage->filter('p')->first()->text());
+        $this->assertEquals('Aucune entrée dans le journal pour l\'instant.', $listPage->filter('p')->first()->text());
 
-        //Test 2 si aucun rapport n'est affiché
-        // $this->assertEquals('Ajouter une nouvelle entrée', $listPage->filter('a:contains("Ajouter une nouvelle entrée")')->first()->text());
+        $this->assertEquals('Ajouter une nouvelle entrée', $listPage->filter('button:contains("Ajouter une nouvelle entrée")')->first()->text());
        
-        //Test lien "Contact"
+        
+        //Test lien onglet "Ajax"
+        $linkAjax = $crawler->filter('a:contains("Ajax")')->first()->link();
+
+        //Simulation du clic et ouverture de la page correspondante
+        $PageAjax = $client->click($linkAjax);
+
+        $this->assertEquals('Formulaire test Ajax', $PageAjax->filter('h2')->first()->text());
+
+        $this->assertEquals('Bouton test Ajax', $PageAjax->filter('h3')->first()->text());
+
+        $this->assertEquals('Liste déroulante test Ajax !', $PageAjax->filter('h4')->first()->text());
+
+        //Test lien onglet "Contact"
         $linkContact = $crawler->filter('a:contains("Contact")')->first()->link();
 
         //Simulation du clic et ouverture de la page correspondante
         $PageContact = $client->click($linkContact);
 
-        //Test si le titre principal est 'Liste de tous les rapports'
+        //Test si le titre principal est 'Formulaire de contact'
         $this->assertEquals('Formulaire de contact', $PageContact->filter('h1')->first()->text());
         
-        //Test lien "Liste des rapports"
-        $link = $crawler->filter('a:contains("Contact")')->first()->link();
-
         //Test lien vers compte Github (connexion)
 
         //Test lien vers un site web/service externe (connexion)
@@ -727,7 +879,7 @@ class DiaryControllerTest extends WebTestCase
         $client->submit($form);
 
         //Test du submit du formulaire
-        // $this->assertSame(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Test "nom" vide
         $form = $crawler->selectButton('Ajouter')->form();
@@ -832,8 +984,6 @@ class DiaryControllerTest extends WebTestCase
         $client->submit($form);
 
         $this->assertSame(302, $client->getResponse()->getStatusCode());
-        //Erreur ici : on attend 500 -> le form n'est pas validée : An exception occurred in driver: SQLSTATE[HY000] [2002] Aucune connexion n�a pu �tre �tablie car l�ordinateur cible l�a express�ment refus�e.
-
     }
 
     /**
@@ -846,41 +996,43 @@ class DiaryControllerTest extends WebTestCase
      * Vérifier que la réponse au client contient une notification de réussite d’envoi
      * 
      */
-    // public function testAddReportFromList()
-    // {
-    //     // Commande: ./vendor/bin/simple-phpunit --filter=testAddReportFromList
+    public function testAddReportFromList()
+    {
+        // Commande: ./vendor/bin/simple-phpunit --filter=testAddReportFromList
 
-    //     $client = static::createClient();
+        $client = static::createClient();
 
-    //     $crawler = $client->request('GET', '/diary/list');
+        $crawler = $client->request('GET', '/diary/list');
 
-    //     // $this->assertEquals(1, $crawler->filter('h1:contains("Liste de tous les rapports")')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Liste de tous les rapports")')->count());
 
-    //     // $this->assertContains('Liste de tous les rapports', $client->getResponse()->getContent());
+        $this->assertContains('Liste de tous les rapports', $client->getResponse()->getContent());
 
-    //     //On select le form via le bouton 'Ajouter' : mon crawler représente le bouton
-    //     // $form = $crawler->selectButton('Ajouter une nouvelle entrée')->form();
+        $this->assertContains('Ajouter une nouvelle entrée', $client->getResponse()->getContent());
 
-    //     $addReport = $client->submit($form);
+        //On select le form via le bouton 'Ajouter' : mon crawler représente le bouton
+        $form = $crawler->selectButton('Ajouter une nouvelle entrée')->form();
 
-    //     //Test si le titre principal est 'Ajouter un repas'
-    //     $this->assertEquals(1, $addReport->filter('h1:contains("Ajouter un repas")')->count());
+        $addReport = $client->submit($form);
 
-    //     //On select le form via le bouton 'Ajouter' : mon crawler représente le bouton
-    //     $form = $addReport->selectButton('Ajouter')->form();
+        //Test si le titre principal est 'Ajouter un repas'
+        $this->assertEquals(1, $addReport->filter('h1:contains("Ajouter un repas")')->count());
 
-    //     $form->setValues(array(
-    //         'food[username]' => 'Jean',
-    //         'food[entitled]' => 'Tarte aux fraises',
-    //         'food[calories]' => 85962,
-    //         )
-    //     );
+        //On select le form via le bouton 'Ajouter' : mon crawler représente le bouton
+        $form = $addReport->selectButton('Ajouter')->form();
 
-    //     $client->submit($form);
+        $form->setValues(array(
+            'food[username]' => 'Jean',
+            'food[entitled]' => 'Tarte aux fraises',
+            'food[calories]' => 85962,
+            )
+        );
 
-    //     $this->assertSame(302, $client->getResponse()->getStatusCode());
+        $client->submit($form);
 
-    // }
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+    }
 
 
     /**
@@ -892,119 +1044,118 @@ class DiaryControllerTest extends WebTestCase
      * Vérifier que la réponse au client contient une notification de suppression
      * 
      */
-    // public function testDeleteReport()
-    // {
-    //     // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testDeleteReport
+    public function testDeleteReport()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testDeleteReport
 
-    //     //On requête la page qui affiche le formulaire
-    //     $client = static::createClient();
+        //On requête la page qui affiche le formulaire
+        $client = static::createClient();
 
-    //     $crawler = $client->request('GET', '/diary/list');
+        $crawler = $client->request('GET', '/diary/list');
 
-    //     // $this->assertEquals(1, $crawler->filter('h1:contains("Liste de tous les rapports")')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Liste de tous les rapports")')->count());
 
-    //     //On select le form via le bouton 'Ajouter' : mon crawler représente le bouton
-    //     // $form = $crawler->selectButton('Supprimer')->form();
+        //On select le form via le bouton 'Ajouter' : mon crawler représente le bouton
+        $form = $crawler->selectButton('Supprimer')->form();
 
-    //     $deleteReport = $client->submit($form);
+        $deleteReport = $client->submit($form);
 
-    //     //Suivre la redirection vers le formulaire
-    //     $deleteReport = $client->followRedirect(); 
+        //Suivre la redirection vers le formulaire
+        $deleteReport = $client->followRedirect(); 
 
-    //     //Test soumission formulaire
-    //     $this->assertRegexp('/L\'entrée a bien été?/', $deleteReport->filter('div.alert.alert-success')->first()->text());
+        //Test soumission formulaire
+        $this->assertRegexp('/L\'entrée a bien été?/', $deleteReport->filter('div.alert.alert-success')->first()->text());
 
-    // }
+    }
 
 
     /**
      * Test du formulaire de contact de food-diary
      * 
      */
-    // public function testContactForm()
-    // {
-    //     // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testContactForm
+    public function testContactForm()
+    {
+        // Commande de "test" : ./vendor/bin/simple-phpunit --filter=testContactForm
 
-    //     $client = static::createClient();
+        $client = static::createClient();
 
-    //     $crawler = $client->request('GET', '/diary/Contact');
-    //     // $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/diary/Contact');
+        // $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-    //     $form = $crawler->selectButton('Envoyer')->form();
-    //     // $crawler = $client->submit($form);
+        $form = $crawler->selectButton('Envoyer')->form();
+        // $crawler = $client->submit($form);
 
-    //     $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-    //     //Test champs vides
-    //     $form = $crawler->selectButton('Envoyer')->form();
+        //Test champs vides
+        $form = $crawler->selectButton('Envoyer')->form();
 
-    //     $form->setValues(array(
-    //         'contact[nom]' => '',
-    //         'contact[sujet]' => '',
-    //         'contact[email]' => '',
-    //         'contact[message]' => '',
-    //         )
-    //     );
+        $form->setValues(array(
+            'contact[nom]' => '',
+            'contact[sujet]' => '',
+            'contact[email]' => '',
+            'contact[message]' => '',
+            )
+        );
 
-    //     $client->submit($form);
+        $client->submit($form);
 
-    //     $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-    //     //Test formulaire rempli
-    //     $form = $crawler->selectButton('Envoyer')->form();
+        //Test formulaire rempli
+        $form = $crawler->selectButton('Envoyer')->form();
 
-    //     $form->setValues(array(
-    //         'contact[nom]' => 'Test nom contact',
-    //         'contact[sujet]' => 'Test sujet contact',
-    //         'contact[email]' => 'testmailcontact@gmail.com',
-    //         'contact[message]' => 'Test message contact',
-    //         )
-    //     );
+        $form->setValues(array(
+            'contact[nom]' => 'Test nom contact',
+            'contact[sujet]' => 'Test sujet contact',
+            'contact[email]' => 'testmailcontact@gmail.com',
+            'contact[message]' => 'Test message contact',
+            )
+        );
 
-    //     $client->submit($form);
+        $client->submit($form);
 
-    //     $this->assertSame(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
-    //     //Test valeurs erronées
-    //     $form = $crawler->selectButton('Envoyer')->form();
-    //     $crawler = $client->submit($form);
+        //Test valeurs erronées
+        $form = $crawler->selectButton('Envoyer')->form();
+        $crawler = $client->submit($form);
 
-    //     $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-    //     //Test champs vides
-    //     $form = $crawler->selectButton('Envoyer')->form();
+        //Test invalid data
+        $form = $crawler->selectButton('Envoyer')->form();
 
-    //     $form->setValues(array(
-    //         'contact[nom]' => 123,
-    //         'contact[sujet]' => 456,
-    //         'contact[email]' => 'fake_mail',
-    //         'contact[message]' => 789,
-    //         )
-    //     );
+        $form->setValues(array(
+            'contact[nom]' => 123,
+            'contact[sujet]' => 456,
+            'contact[email]' => 'fake_mail',
+            'contact[message]' => 789,
+            )
+        );
 
-    //     $client->submit($form);
+        $client->submit($form);
 
-    //     $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-    //     //Test mail au format incorrect
-    //     $form = $crawler->selectButton('Envoyer')->form();
+        //Test mail au format incorrect
+        $form = $crawler->selectButton('Envoyer')->form();
 
-    //     $form->setValues(array(
-    //         'contact[nom]' => 'Test nom contact',
-    //         'contact[sujet]' => 'Test sujet contact',
-    //         'contact[email]' => 'invalid_mail',
-    //         'contact[message]' => 'Test message contact',
-    //         )
-    //     );
+        $form->setValues(array(
+            'contact[nom]' => 'Test nom contact',
+            'contact[sujet]' => 'Test sujet contact',
+            'contact[email]' => 'invalid_mail',
+            'contact[message]' => 'Test message contact',
+            )
+        );
 
-    //     $client->submit($form);
+        $client->submit($form);
 
-    //     $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
+        //TODO : Test envoi mail
 
-    //     //TODO : Test envoi mail
-
-    // }
+    }
 
     
     public function testNoPageFound ()
@@ -1017,6 +1168,23 @@ class DiaryControllerTest extends WebTestCase
 
         // Code status 404 si la page n'existe pas
         $this->assertTrue($client->getResponse()->isNotFound());
+    }
+
+    /**
+     *  Asserts that the response is 404
+     */
+    public function testPageNotFound()
+    {
+        
+        // Commande : ./vendor/bin/simple-phpunit --filter=testPageNotFound
+        
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/error-404');
+
+        $this->assertTrue($client->getResponse()->isNotFound());
+
+
     }
 
 
@@ -1041,7 +1209,7 @@ class DiaryControllerTest extends WebTestCase
         
         $this->assertEquals('Here comes the result', $crawler->filter('div#ajax-results')->first()->text());
  
-        $dataTest = ['choice' => 67655];
+        $dataTest = ['btnclick' => true];
        
         $clientAjax = static::createClient();
 
@@ -1055,12 +1223,8 @@ class DiaryControllerTest extends WebTestCase
         
         $JSON_response = json_decode($client->getResponse()->getContent(), true);
 
-        // $this->assertEquals($JSON_response["output"], 100);
-        $this->assertEquals($JSON_response["success"], true);
-        $this->assertEquals($JSON_response["choice"], 67655);
-        // $this->assertRegExp('/Vous avez sélectionné ?/', $JSON_response["output"]);
-        // $this->assertEquals('Vous avez cliqué...', $crawler->filter('div#ajax-results')->first()->text());
-
+        $this->assertEquals($JSON_response["btnclick"], true);
+        $this->assertRegExp('/Vous avez cliqué...?/', $JSON_response["output"]);
     }
 
     /**
@@ -1079,7 +1243,7 @@ class DiaryControllerTest extends WebTestCase
         // Code status 200 renvoyé (chargement de la page)
         $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-        $this->assertContains('Liste déroulante test Ajax !', $crawler->filter('h2')->first()->text());
+        $this->assertContains('Liste déroulante test Ajax !', $crawler->filter('h4')->first()->text());
  
         $dataTest = ['btnclick' => 'Cliquez !'];
        
@@ -1092,6 +1256,16 @@ class DiaryControllerTest extends WebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
+
+        // asserts that the "Content-Type" header is "application/json"
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+               'Content-Type',
+               'application/json'
+            ),
+            'the "Content-Type" header is "application/json"' // optional message shown on failure
+);
+
 
         $JSON_response = json_decode($client->getResponse()->getContent(), true);
 

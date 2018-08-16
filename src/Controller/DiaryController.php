@@ -85,7 +85,7 @@ class DiaryController extends Controller
     }
 
     /**
-     * @Route("/diary/delete-record", name="record")
+     * @Route("/diary/delete-record", name="delete-record")
      */
     public function deleteRecordAction(Request $request)
     {
