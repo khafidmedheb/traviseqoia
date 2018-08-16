@@ -25,7 +25,6 @@ script:
    # - composer install
    - cat phpunit.xml.dist
    - cat .env.dist
-   - ls -a
    #- chmod -R 777 app/tmp
    #- cd app/tmp
    #- touch .env.travis
