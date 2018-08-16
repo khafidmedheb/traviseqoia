@@ -1,16 +1,32 @@
 language: php
-php:
-  - '7.1'
+#php:
+  #- '7.1'
 
 services:
   - mysql
   #- elasticsearch
-  #
-before_install:
-  - mysql -u khalid --password="sio22" < tests/seqoia34.sql
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+# Matrix to test in every php version
+matrix:
+  # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
+  fast_finish: true
+  include:
+    - php: 7.1
+    - php: hhvm
+  allow_failures:
+    - php: hhvm
 
 script:
    - composer install
+   - cp app/env.yml.dist app/env.yml
+   - php bin/console doctrine:database:create --env=test
+   - php bin/console doctrine:schema:create --env=test
+   - php bin/console doctrine:fixtures:load -n --env=test
    - ./vendor/bin/simple-phpunit
    # A tool to automatically fix PHP coding standards issues
    - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
