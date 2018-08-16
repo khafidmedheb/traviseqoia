@@ -23,8 +23,13 @@ matrix:
 
 script:
    - composer install
+   - mkdir app/tmp
+   - chmod -R 777 app/tmp
+   - cd app/tmp
+   - touch .env.travis
    - echo 
        "DATABASE_URL=mysql://khalid:sio22@127.0.0.1/seqoia34" > app/.env.travis
+   - cp .env.travis .env
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
