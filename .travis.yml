@@ -23,7 +23,7 @@ matrix:
 
 script:
    - composer install
-   - cp ..\seqoia34\.env.yml.dist ..\seqoia34\.env.yml
+   - cp ./../.env.yml.dist ./../.env.yml
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
