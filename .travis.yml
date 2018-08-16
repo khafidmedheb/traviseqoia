@@ -7,7 +7,7 @@ services:
   #- elasticsearch
   #
 before_install:
-  - mysql -u root --password="root" < tests/seqoia34.sql
+  - mysql -u khalid --password="sio22" < tests/seqoia34.sql
 
 script:
    - composer install
