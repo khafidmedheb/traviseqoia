@@ -17,13 +17,13 @@ matrix:
   fast_finish: true
   include:
     - php: 7.1
-    - php: hhvm
-  allow_failures:
-    - php: hhvm
+    #- php: hhvm
+  #allow_failures:
+    #- php: hhvm
 
 script:
    - composer install
-   - cp app/env.yml.dist app/env.yml
+   - cp app/.env.yml.dist app/.env.yml
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
