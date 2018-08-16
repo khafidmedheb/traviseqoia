@@ -23,8 +23,8 @@ matrix:
 
 script:
    - composer install
-   - cd app/
    - cat behat.yml
+   - cat .env
    - ls -a
    #- chmod -R 777 app/tmp
    #- cd app/tmp
