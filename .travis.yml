@@ -23,13 +23,17 @@ matrix:
 
 script:
    - composer install
-   - cp C:\Program Files (x86)\Ampps\www\seqoia34\.env.yml.dist C:\Program Files (x86)\Ampps\www\seqoia34\.env.yml
+   - cp ..\seqoia34\.env.yml.dist ..\seqoia34\.env.yml
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
    - ./vendor/bin/simple-phpunit
    # A tool to automatically fix PHP coding standards issues
    - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
+   # Run phpspec tests ...
+   #- bin/phpspec run --no-ansi --format=dot
+   # Run behat tests ...
+   #- bin/behat --profile=default -f progress
 
 cache:
   directories:
