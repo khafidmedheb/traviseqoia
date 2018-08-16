@@ -23,9 +23,9 @@ matrix:
 
 script:
    - composer install
-   - mysql -u root -e 'CREATE DATABASE seqoia34;'
-   #- cp .env.travis .env
-   #- php bin/console doctrine:database:create --env=test
+   - echo 
+       "DATABASE_URL=mysql://khalid:sio22@127.0.0.1/seqoia34" > app/.env.travis
+   - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
    - ./vendor/bin/simple-phpunit
