@@ -1,9 +1,9 @@
 language: php
-#php:
-  #- '7.1'
+php:
+  - '7.1'
 
-# services:
-#   - mysql
+services:
+   - mysql
   #- elasticsearch
 
 # Cache composer packages so "composer install" is faster
@@ -23,14 +23,13 @@ language: php
 
 script:
    # - composer install
-   - cat phpunit.xml.dist
-   - cat .env.dist
-   - cat .env
    #- chmod -R 777 app/tmp
    #- cd app/tmp
    #- touch .env.travis
    #- echo 
        #"DATABASE_URL=mysql://khalid:sio22@127.0.0.1/seqoia34" > app/.env.travis
+   - cat .env.dist
+   - touch .env
    - cp .env.dist .env
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
