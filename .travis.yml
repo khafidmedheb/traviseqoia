@@ -22,11 +22,10 @@ services:
     #- php: hhvm
 
 script:
-   - composer install
-   # this checks that the application doesn't use dependencies with known security vulnerabilities
    - touch .env
    - cp .env.dist .env
-   - cat .env
+   - composer install
+   # this checks that the application doesn't use dependencies with known security vulnerabilities
    - php bin/console doctrine:database:drop --force --env=test
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
