@@ -23,15 +23,10 @@ matrix:
 
 script:
    - composer install
-   - cat behat.yml
-   - cat .env
-   - ls -a
-   #- chmod -R 777 app/tmp
-   #- cd app/tmp
-   #- touch .env.travis
-   #- echo 
-       #"DATABASE_URL=mysql://khalid:sio22@127.0.0.1/seqoia34" > app/.env.travis
-   #- cp .env.travis .env
+   # this checks that the application doesn't use dependencies with known security vulnerabilities
+   - ./bin/console security:check --end-point=http://security.sensiolabs.org/check_lock
+   - touch .env
+   - cp .env.dist .env
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
