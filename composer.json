@@ -36,6 +36,7 @@
         "behat/symfony2-extension": "^2.1",
         "behatch/contexts": "^3.2",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "phpspec/phpspec": "^5.0",
         "refinery29/php-cs-fixer-config": "^0.10.1",
         "sensiolabs/security-checker": "^4.1",
         "symfony/debug-pack": "*",
