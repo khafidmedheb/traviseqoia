@@ -4,12 +4,12 @@ php:
 
 services:
    - mysql
-  #- elasticsearch
+ # - elasticsearch
 
 # Cache composer packages so "composer install" is faster
-# cache:
-#   directories:
-#     - $HOME/.composer/cache/files
+cache:
+   directories:
+     - $HOME/.composer/cache/files
 
 # Matrix to test in every php version
 # matrix:
@@ -24,11 +24,7 @@ services:
 script:
    - touch .env
    - cp .env.dist .env
-   #- cp ./config/parameters.yml.travis  ./config/parameters.yml
-   #- cat ./config/parameters.yml 
    - composer install
-   # this checks that the application doesn't use dependencies with known security vulnerabilities
-   
    #=====================================================================
    # Accès à la base de données
    #=====================================================================
@@ -40,20 +36,19 @@ script:
    #=====================================================================
    # Outils de tests
    #=====================================================================
-   # - ./vendor/bin/simple-phpunit
+   - ./vendor/bin/simple-phpunit
+   
    # A tool to automatically fix PHP coding standards issues
-   # - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
-   # A tool to automatically fix PHP coding standards issues
-   # Run phpspec tests ...
-   #- vendor/bin/phpspec run --no-interaction --format=dot
-  # - vendor/bin/phpspec run --config=phpspec.yml --no-interaction
-   # Run behat tests ...
-   #- bin/behat --profile=default -f progress
-   # ou - behat -fprogress --strict --tags '~@php-version,'`php php_version_tags.php`
-
-# cache:
-#   directories:
-#     - $HOME/.php-cs-fixer
+   - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
+   
+   # Behat is an open source behavior-driven development framework for PHP
+   # you start by writing human-readable sentences that describe a feature of your application and how it should work, 
+   # and only then implement this behavior in software.
+   - vendor/bin/behat --profile=default -f progress
+   #=====================================================================
+cache:
+  directories:
+    - $HOME/.php-cs-fixer
 
 # Define an environment variable
 env:
