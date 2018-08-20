@@ -10,6 +10,11 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use App\Classes\Calculator;
 
+/**
+ * Notes utilisation Travis
+ *
+ * 1) Les tests de soumission de formulaire passent mal sur Travis (utiliser Selenium)
+ */
 
 /**
  * Classe test pour tester :
