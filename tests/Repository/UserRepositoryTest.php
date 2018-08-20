@@ -35,14 +35,14 @@ class UserRepositoryTest extends KernelTestCase
 	}
 
 	/**
-	 * Test le renseignement d'un user dans la table Users
-	 * Lien : http://symfony.com/doc/current/testing/doctrine.html
+	 * Recherche si user10 existe dans users
+	 *
 	 */
-	public function testFindUserToto()
+	public function testFindUserTen()
 	{
 		// Commande : ./vendor/bin/simple-phpunit --filter=testFindUserToto
 
-		$resultExpected = "Toto";
+		$resultExpected = "user10";
 
 		$users = $this->entityManager
 		    ->getRepository(User::class)
@@ -51,32 +51,40 @@ class UserRepositoryTest extends KernelTestCase
 		$this->assertEquals($resultExpected, $users);
 	}
 
-    public function testFindAllUsers()
-    {
-    	// Commande : ./vendor/bin/simple-phpunit --filter=testFindAllUsers
+    /**
+     * Recherche si le nomnre de users correspond à un nombre attendu
+     * A utiliser avec les loadfixtures
+     */
+    // public function testFindAllUsers()
+    // {
+    // 	// Commande : ./vendor/bin/simple-phpunit --filter=testFindAllUsers
     	
-    	$resultExpected = 9;
+    // 	$resultExpected = 9;
 
-    	$users = $this->entityManager
-    	    ->getRepository(User::class)
-    	    ->findAllUsers();
+    // 	$users = $this->entityManager
+    // 	    ->getRepository(User::class)
+    // 	    ->findAllUsers();
 
-    	$this->assertCount($resultExpected, $users);
-    }
+    // 	$this->assertCount($resultExpected, $users);
+    // }
+    
+    /**
+     * Recherche si le nomnre de users correspond à un nombre attendu
+     * A utiliser avec les loadfixtures
+     */
+	// public function testListUsers()
+ //    {
+ //        // Commande : ./vendor/bin/simple-phpunit --filter=testListUsers
 
-	public function testListUsers()
-    {
-        // Commande : ./vendor/bin/simple-phpunit --filter=testListUsers
+ //        $resultExpected = 9;
 
-        $resultExpected = 9;
+ //    	$users = $this->entityManager
+ //    	    ->getRepository(User::class)
+ //    	    ->findAllOrderedByName();
 
-    	$users = $this->entityManager
-    	    ->getRepository(User::class)
-    	    ->findAllOrderedByName();
+ //    	$this->assertCount($resultExpected, $users);
 
-    	$this->assertCount($resultExpected, $users);
-
-    }
+ //    }
 
   //   public function testLastUserIsTitus()
   //   {
@@ -91,22 +99,13 @@ class UserRepositoryTest extends KernelTestCase
 		// $this->assertEquals($resultExpected, $users);
   //   }
 
-    public function test_get_nine_users()
-    {
-        // Commande : ./vendor/bin/simple-phpunit --filter=test_get_six_users
-       
-        $users = $this->entityManager->getRepository(User::class)->findAll();
-
-        $this->assertEquals(9, count($users));
-    }
-
-    public function testAdminTotoIsPresent()
+    public function testAdminTestNomIsPresent()
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=testAdminTotoIsPresent
        
         $users = $this->entityManager
             ->getRepository(User::class)
-            ->verifyAdminTotoIsRegistered("Toto", "toto@gmail.com");
+            ->verifyAdminTotoIsRegistered("Test nom", "test@gmail.com");
 
         $this->assertCount(1, $users);
     }
