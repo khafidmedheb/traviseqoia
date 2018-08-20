@@ -1,7 +1,0 @@
-parameters:
-    database.driver:        mysql
-    database.host:          localhost
-    database.port:          3306
-    database.name:          seqoia_test
-    database.user:          khalid
-    database.password:      sio22
