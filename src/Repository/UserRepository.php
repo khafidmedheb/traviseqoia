@@ -82,7 +82,7 @@ class UserRepository extends EntityRepository
 
         $result = $this->getEntityManager()
             ->createQuery($sql)
-            ->setParameters(array("name" => $name, "email" => $email))
+            ->setParameters(array('name' => $name, 'email' => $email))
             ->getResult();
 
         return $result;

@@ -36,7 +36,8 @@ script:
    #=====================================================================
    # Outils de tests
    #=====================================================================
-   - ./vendor/bin/simple-phpunit
+   # - ./vendor/bin/simple-phpunit
+   - ./vendor/bin/simple-phpunit --filter=testForm
    
    # A tool to automatically fix PHP coding standards issues
    - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
