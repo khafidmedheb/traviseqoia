@@ -27,12 +27,12 @@ script:
    #- cp ./config/parameters.yml.travis  ./config/parameters.yml
    #- cat ./config/parameters.yml 
    - composer install
+   - php bin/console security:check --end-point=http://security.sensiolabs.org/check_lock
    # this checks that the application doesn't use dependencies with known security vulnerabilities
    
    #=====================================================================
    # Accès à la base de données
    #=====================================================================
-   - php bin/console doctrine:database:drop --force --env=test
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
