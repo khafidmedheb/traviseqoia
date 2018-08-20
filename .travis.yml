@@ -22,25 +22,34 @@ services:
     #- php: hhvm
 
 script:
-   # - touch .env
-   # - cp .env.dist .env
-   - cp ./config/parameters.yml.travis  ./config/parameters.yml
-   - cat ./config/parameters.yml 
+   - touch .env
+   - cp .env.dist .env
+   #- cp ./config/parameters.yml.travis  ./config/parameters.yml
+   #- cat ./config/parameters.yml 
    - composer install
    # this checks that the application doesn't use dependencies with known security vulnerabilities
+   
+   #=====================================================================
+   # Accès à la base de données
+   #=====================================================================
    - php bin/console doctrine:database:drop --force --env=test
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
+   #=====================================================================
+   
+   #=====================================================================
+   # Outils de tests
+   #=====================================================================
    # - ./vendor/bin/simple-phpunit
    # A tool to automatically fix PHP coding standards issues
    # - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
+   # A tool to automatically fix PHP coding standards issues
    # Run phpspec tests ...
-   # - bin/phpspec run --no-ansi --format=dot
-   - vendor/bin/phpspec run --no-interaction --format=dot
+   #- vendor/bin/phpspec run --no-interaction --format=dot
   # - vendor/bin/phpspec run --config=phpspec.yml --no-interaction
    # Run behat tests ...
-   # - bin/behat --profile=default -f progress
+   #- bin/behat --profile=default -f progress
    # ou - behat -fprogress --strict --tags '~@php-version,'`php php_version_tags.php`
 
 # cache:
