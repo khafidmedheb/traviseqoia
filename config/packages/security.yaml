@@ -17,7 +17,7 @@ security:
         in_memory:
             memory:
                 users:
-                    khafid: { password: sio22 }
+                    khafidman: { password: sio22 }
         # user_db:
         #     entity: { class: App\Entity\User, property: username }
     firewalls:
