@@ -812,7 +812,7 @@ class DiaryControllerTest extends WebTestCase
         $listPage = $client->click($link);
 
         //Test si le titre principal est 'Liste de tous les rapports'
-        // $this->assertEquals('Liste de tous les rapports', $listPage->filter('h1')->first()->text());
+        // $this->assertEquals('Liste de tous les rapports', $listPage->filter('h1.page-header')->first()->text());
 
         //Test 1 si aucun rapport n'est affiché
         // $this->assertEquals('Aucune entrée dans le journal pour l\'instant.', $listPage->filter('p')->first()->text());
