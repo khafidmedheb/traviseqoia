@@ -728,8 +728,8 @@ class DiaryControllerTest extends WebTestCase
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=testLinks
         
-        // $client = static::createClient();
-        $client = static::createPantherClient();
+        $client = static::createClient();
+        // $client = static::createPantherClient();
 
         // $client = $this->makeClient();
 
