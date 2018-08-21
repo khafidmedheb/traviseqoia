@@ -34,7 +34,7 @@ script:
    #=====================================================================
    
    #=====================================================================
-   # Outils de tests
+   # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
    - ./vendor/bin/simple-phpunit
    # - ./vendor/bin/simple-phpunit --filter=testForm
