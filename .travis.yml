@@ -87,7 +87,6 @@ script:
   - php bin/console doctrine:fixtures:load -n --env=test
    # - composer install
    
-   
    #=====================================================================
    # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
@@ -107,6 +106,6 @@ cache:
   directories:
     - $HOME/.php-cs-fixer
 
-# Define an environment variable
+# Define an environment variable rrrr
 env:
   - SYMFONY_VERSION="3.4" DB=mysql
