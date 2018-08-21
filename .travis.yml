@@ -39,7 +39,7 @@ script:
    - cp .env.dist .env
    - composer install
    - xvfb-run --server-args="-screen 0 1024x768x24" make test
-   - php bin/console server:run
+   - php bin/console server:run &
    #=====================================================================
    # Accès à la base de données
    #=====================================================================
