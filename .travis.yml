@@ -79,8 +79,8 @@ script:
    #=====================================================================
    # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
-   # - ./vendor/bin/simple-phpunit
-   - ./vendor/bin/simple-phpunit --filter=testLinks
+   - ./vendor/bin/simple-phpunit
+   # - ./vendor/bin/simple-phpunit --filter=testLinks
    # - ./vendor/bin/simple-phpunit --filter=testForm
    
    # A tool to automatically fix PHP coding standards issues
