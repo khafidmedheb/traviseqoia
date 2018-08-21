@@ -18,16 +18,15 @@ cache:
    directories:
      - $HOME/.composer/cache/files
 
-# addons:
-#   apt:
-#     sources:
-#       - google-chrome
-#     packages:
-#       - google-chrome-stable
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 
 before_install:
   - # start your web application and listen on `localhost`
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
 
 #install:
   # - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar
@@ -38,8 +37,8 @@ before_install:
 
 before_script:
   - composer install
-  - "sh start-server.sh > /dev/null &"
-  - "phantomjs --webdriver=4444 > /dev/null &"
+  - touch .env
+  - cp .env.dist .env
   # - app/console do:da:cr -e=test > /dev/null
   # - app/console do:sc:cr -e=test > /dev/null
   # - chmod -R 777 app/cache app/logs
@@ -56,7 +55,7 @@ before_script:
   
   # - "export DISPLAY=:99.0"
   # - "sh -e /etc/init.d/xvfb start"
-  - php bin/console server:run &
+  # - php bin/console server:run &
   # Check if a web server is listening on a certain socket
   # - php bin/console server:status
   # - "wget http://selenium-release.storage.googleapis.com/3.0-beta3/selenium-server-standalone-3.0.0-beta3.jar -O selenium-server-standalone.jar && sudo mv selenium-server-standalone.jar /usr/local/bin"
@@ -66,8 +65,10 @@ before_script:
   # - sleep 3
 
 script:
-   - touch .env
-   - cp .env.dist .env
+   # - touch .env
+   # - cp .env.dist .env
+   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
+   - php bin/console server:run &
    # - composer install
    #=====================================================================
    # Accès à la base de données
@@ -80,8 +81,8 @@ script:
    #=====================================================================
    # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
-   - ./vendor/bin/simple-phpunit
-   # - ./vendor/bin/simple-phpunit --filter=testLinks
+   #- ./vendor/bin/simple-phpunit
+   - ./vendor/bin/simple-phpunit --filter=testLinks
    # - ./vendor/bin/simple-phpunit --filter=testForm
    
    # A tool to automatically fix PHP coding standards issues
