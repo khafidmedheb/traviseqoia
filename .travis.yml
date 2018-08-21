@@ -11,6 +11,10 @@ cache:
    directories:
      - $HOME/.composer/cache/files
 
+sudo: required
+addons:
+  chrome: stable
+  
 # Matrix to test in every php version
 # matrix:
   # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
