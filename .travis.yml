@@ -85,7 +85,7 @@ before_script:
   # - sleep 3
 
 script:
-  - chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - chrome --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
   - php bin/console server:run &
   - php bin/console doctrine:fixtures:load -n --env=test
    # - composer install
@@ -109,7 +109,7 @@ cache:
   directories:
     - $HOME/.php-cs-fixer
 
-# Define an environment variable rrrrtest
+# Define an environment variable rrrrtestggg
 # test commit
 env:
   - SYMFONY_VERSION="3.4" DB=mysql
