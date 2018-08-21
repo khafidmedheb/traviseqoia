@@ -34,7 +34,7 @@ script:
    #=====================================================================
    # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
-   - ./vendor/bin/simple-phpunit
+   - ./vendor/bin/simple-phpunit --verbose
    # - ./vendor/bin/simple-phpunit --filter=testLinks
    # - ./vendor/bin/simple-phpunit --filter=testForm
    
@@ -46,6 +46,13 @@ script:
    # and only then implement this behavior in software.
    # - vendor/bin/behat --profile=default -f progress
    #=====================================================================
+after_script:
+  - cat /var/log/dev.log
+  - tail -f /var/log/dev.log
+  - cat /var/log/test.log
+  - tail -f /var/log/test.log
+
+
 cache:
   directories:
     - $HOME/.php-cs-fixer
