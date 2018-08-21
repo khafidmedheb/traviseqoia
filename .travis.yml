@@ -35,20 +35,20 @@ before_install:
 #   - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
 
 before_script:
-  - app/console do:da:cr -e=test > /dev/null
-  - app/console do:sc:cr -e=test > /dev/null
-  - chmod -R 777 app/cache app/logs
-  - app/console --env=test cache:warmup
-  - chmod -R 777 app/cache app/logs
-  - "sh -e /etc/init.d/xvfb start"
+  # - app/console do:da:cr -e=test > /dev/null
+  # - app/console do:sc:cr -e=test > /dev/null
+  # - chmod -R 777 app/cache app/logs
+  # - app/console --env=test cache:warmup
+  # - chmod -R 777 app/cache app/logs
   - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
   - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
   - "wget http://chromedriver.googlecode.com/files/chromedriver_linux32_23.0.1240.0.zip && unzip chromedriver_linux32_23.0.1240.0.zip && sudo mv chromedriver /usr/bin"
   - "java -jar selenium-server-standalone-2.31.0.jar > /dev/null &"
   - sleep 5
   # - "export DISPLAY=:99.0"
   # - "sh -e /etc/init.d/xvfb start"
-  # - sleep 3 # give xvfb some time to start
   - php bin/console server:run &
   # Check if a web server is listening on a certain socket
   # - php bin/console server:status
