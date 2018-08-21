@@ -1,9 +1,9 @@
 dist: trusty
+sudo: required
 language: php
 
 addons:
-  chrome: stable 
-  # --no-sandbox 
+  chrome: stable --no-sandbox 
 
 php:
   - '7.1'
@@ -16,8 +16,6 @@ services:
 cache:
    directories:
      - $HOME/.composer/cache/files
-
-# sudo: required
 
 # addons:
 #   apt:
