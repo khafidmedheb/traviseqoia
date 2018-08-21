@@ -55,6 +55,7 @@ before_script:
   - touch .env
   - cp .env.dist .env
   # test commit
+  # test commit
   # - composer install
   # - "sh start-server.sh > /dev/null &"
   # - "phantomjs --webdriver=4444 > /dev/null &"
