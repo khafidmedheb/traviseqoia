@@ -1,6 +1,6 @@
-# dist: trusty
-# sudo: required
+sudo: required
 language: php
+dist: trusty
 
 # addons:
 #   chrome: stable --no-sandbox 
@@ -8,14 +8,21 @@ language: php
 php:
   - '7.1'
 
-services:
-   - mysql
- # - elasticsearch
-
 # Cache composer packages so "composer install" is faster
 cache:
    directories:
      - $HOME/.composer/cache/files
+
+services:
+   - mysql
+ # - elasticsearch
+ 
+addons:
+  chrome: stable --no-sandbox
+
+install:
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+
 
 # addons:
 #   apt:
@@ -24,9 +31,10 @@ cache:
 #     packages:
 #       - google-chrome-stable
 
-before_install:
-  - # start your web application and listen on `localhost`
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
+
+# before_install:
+  # start your web application and listen on `localhost`
+  #- google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
 
 #install:
   # - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar
@@ -36,9 +44,18 @@ before_install:
 #   - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
 
 before_script:
-  - composer install
-  - "sh start-server.sh > /dev/null &"
-  - "phantomjs --webdriver=4444 > /dev/null &"
+  #=====================================================================
+  # Accès à la base de données
+  #=====================================================================
+  - php bin/console doctrine:database:create --env=test
+  - php bin/console doctrine:schema:create --env=test
+  # - php bin/console doctrine:fixtures:load -n --env=test
+  #=====================================================================
+  - touch .env
+  - cp .env.dist .env
+  # - composer install
+  # - "sh start-server.sh > /dev/null &"
+  # - "phantomjs --webdriver=4444 > /dev/null &"
   # - app/console do:da:cr -e=test > /dev/null
   # - app/console do:sc:cr -e=test > /dev/null
   # - chmod -R 777 app/cache app/logs
@@ -55,7 +72,7 @@ before_script:
   
   # - "export DISPLAY=:99.0"
   # - "sh -e /etc/init.d/xvfb start"
-  - php bin/console server:run &
+  # - php bin/console server:run &
   # Check if a web server is listening on a certain socket
   # - php bin/console server:status
   # - "wget http://selenium-release.storage.googleapis.com/3.0-beta3/selenium-server-standalone-3.0.0-beta3.jar -O selenium-server-standalone.jar && sudo mv selenium-server-standalone.jar /usr/local/bin"
@@ -65,22 +82,17 @@ before_script:
   # - sleep 3
 
 script:
-   - touch .env
-   - cp .env.dist .env
+  - chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - php bin/console server:run &
+  - php bin/console doctrine:fixtures:load -n --env=test
    # - composer install
-   #=====================================================================
-   # Accès à la base de données
-   #=====================================================================
-   - php bin/console doctrine:database:create --env=test
-   - php bin/console doctrine:schema:create --env=test
-   - php bin/console doctrine:fixtures:load -n --env=test
-   #=====================================================================
+   
    
    #=====================================================================
    # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
-   - ./vendor/bin/simple-phpunit
-   # - ./vendor/bin/simple-phpunit --filter=testLinks
+   #- ./vendor/bin/simple-phpunit
+   - ./vendor/bin/simple-phpunit --filter=testLinks
    # - ./vendor/bin/simple-phpunit --filter=testForm
    
    # A tool to automatically fix PHP coding standards issues
