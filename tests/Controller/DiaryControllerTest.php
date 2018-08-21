@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Panther\PantherTestCase;
 
 use App\Classes\Calculator;
 
@@ -727,7 +728,8 @@ class DiaryControllerTest extends WebTestCase
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=testLinks
         
-        $client = static::createClient();
+        // $client = static::createClient();
+        $client = static::createPantherClient();
 
         // $client = $this->makeClient();
 
