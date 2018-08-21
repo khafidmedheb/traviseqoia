@@ -46,8 +46,9 @@ script:
    # and only then implement this behavior in software.
    # - vendor/bin/behat --profile=default -f progress
    #=====================================================================
-# Voir les logs
+
 after_script:
+  - echo "Test after script"
   - cat /var/log/dev.log
   - tail -f /var/log/dev.log
   - cat /var/log/test.log
