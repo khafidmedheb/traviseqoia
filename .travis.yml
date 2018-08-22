@@ -29,7 +29,7 @@ script:
    - google-chrome-stable --no-sandbox --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
    - php bin/console server:run &
    #=====================================================================
-   # Accès à la base de données
+   # Accès à la base de données test commit
    #=====================================================================
    - php bin/console doctrine:database:create --env=test
    - php bin/console doctrine:schema:create --env=test
