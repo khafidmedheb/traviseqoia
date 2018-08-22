@@ -17,7 +17,7 @@ cache:
      - $HOME/.composer/cache/files
 
 before_script:
-  - sleep 10 # ElasticSearch takes few seconds to start...
+  # - sleep 10 # ElasticSearch takes few seconds to start...
   - composer install
   - touch .env
   - cp .env.dist .env
