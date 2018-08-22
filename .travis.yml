@@ -8,6 +8,7 @@ php:
 
 services:
    - mysql
+   # ElasticSearch uses the default configuration and is available on 127.0.0.1.
  # - elasticsearch
 
 # Cache composer packages so "composer install" is faster
@@ -16,6 +17,7 @@ cache:
      - $HOME/.composer/cache/files
 
 before_script:
+  - sleep 10 # ElasticSearch takes few seconds to start...
   - composer install
   - touch .env
   - cp .env.dist .env
@@ -48,7 +50,7 @@ script:
    # you start by writing human-readable sentences that describe a feature of your application and how it should work, 
    # and only then implement this behavior in software.
    # - vendor/bin/behat --profile=default -f progress
-   - vendor/bin/behat
+   - vendor/bin/behat --dry-run --append-snippets
    #=====================================================================
 
 after_failure:

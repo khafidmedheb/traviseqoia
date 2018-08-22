@@ -76,7 +76,7 @@ class UserRepositoryTest extends KernelTestCase
     {
         // Commande : ./vendor/bin/simple-phpunit --filter=testListUsers
 
-        $resultExpected = 9;
+        $resultExpected = 20;
 
     	$users = $this->entityManager
     	    ->getRepository(User::class)
@@ -90,7 +90,7 @@ class UserRepositoryTest extends KernelTestCase
     {
     	// Commande : ./vendor/bin/simple-phpunit --filter=testLastUserIsTitus
     	
-    	$resultExpected = "Titus";
+    	$resultExpected = 'Titus';
 
 		$users = $this->entityManager
 		    ->getRepository(User::class)
@@ -105,7 +105,7 @@ class UserRepositoryTest extends KernelTestCase
        
         $users = $this->entityManager
             ->getRepository(User::class)
-            ->verifyAdminTotoIsRegistered("Test nom", "test@gmail.com");
+            ->verifyAdminTotoIsRegistered("user10", "user10@gmail.com");
 
         $this->assertCount(1, $users);
     }
