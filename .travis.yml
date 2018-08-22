@@ -19,6 +19,9 @@ before_script:
   - composer install
   - touch .env
   - cp .env.dist .env
+  # Pour utiliser Behat
+  - "sh start-server.sh > /dev/null &"
+  - "phantomjs --webdriver=4444 > /dev/null &"
 
 script:
    - google-chrome-stable --no-sandbox --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
