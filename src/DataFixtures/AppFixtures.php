@@ -16,21 +16,21 @@ class AppFixtures extends Fixture
 {
 
     //Voir comment les users loaded "loggables" via le login de fosuserbundle
-    // public function loadUserData(ObjectManager $manager)
-    // {
-    //     //On crée 15 utilisateurs
-    //     for ($i = 0; $i <= 16; ++$i) {
-    //         $user = new User();
-    //         $user->setUsername('user'.$i);
-    //         $user->setEmail('userfix'.$i.'@gmail.com');
-    //         $user->setEnabled('true');
-    //         $user->setPassword('titi');
-    //         $user->setRoles(array(('ROLE_ADMIN')));
-    //         $manager->persist($user);
-    //     }
+    public function loadUserData(ObjectManager $manager)
+    {
+        //On crée 15 utilisateurs
+        for ($i = 0; $i <= 16; ++$i) {
+            $user = new User();
+            $user->setUsername('user'.$i);
+            $user->setEmail('userfix'.$i.'@gmail.com');
+            $user->setEnabled('true');
+            $user->setPassword('titi');
+            $user->setRoles(array(('ROLE_ADMIN')));
+            $manager->persist($user);
+        }
 
-    //     $manager->flush();
-    // }
+        $manager->flush();
+    }
 
     public function load(ObjectManager $manager)
     {

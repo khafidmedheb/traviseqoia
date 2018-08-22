@@ -55,36 +55,36 @@ class UserRepositoryTest extends KernelTestCase
      * Recherche si le nomnre de users correspond à un nombre attendu
      * A utiliser avec les loadfixtures
      */
-    // public function testFindAllUsers()
-    // {
-    // 	// Commande : ./vendor/bin/simple-phpunit --filter=testFindAllUsers
+    public function testFindAllUsers()
+    {
+    	// Commande : ./vendor/bin/simple-phpunit --filter=testFindAllUsers
     	
-    // 	$resultExpected = 20;
+    	$resultExpected = 16;
 
-    // 	$users = $this->entityManager
-    // 	    ->getRepository(User::class)
-    // 	    ->findAllUsers();
+    	$users = $this->entityManager
+    	    ->getRepository(User::class)
+    	    ->findAllUsers();
 
-    // 	$this->assertCount($resultExpected, $users);
-    // }
+    	$this->assertCount($resultExpected, $users);
+    }
     
     /**
      * Recherche si le nomnre de users correspond à un nombre attendu
      * A utiliser avec les loadfixtures
      */
-	// public function testListUsers()
- //    {
- //        // Commande : ./vendor/bin/simple-phpunit --filter=testListUsers
+	public function testListUsers()
+    {
+        // Commande : ./vendor/bin/simple-phpunit --filter=testListUsers
 
- //        $resultExpected = 20;
+        $resultExpected = 16;
 
- //    	$users = $this->entityManager
- //    	    ->getRepository(User::class)
- //    	    ->findAllOrderedByName();
+    	$users = $this->entityManager
+    	    ->getRepository(User::class)
+    	    ->findAllOrderedByName();
 
- //    	$this->assertCount($resultExpected, $users);
+    	$this->assertCount($resultExpected, $users);
 
- //    }
+    }
 
  //    public function testLastUserIsTitus()
  //    {
