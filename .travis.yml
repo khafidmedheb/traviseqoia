@@ -10,7 +10,7 @@ addons:
     packages:
       - oracle-java8-set-default 
 
-sudo: true
+# sudo: true
 
 php:
   - '7.1'
@@ -26,25 +26,22 @@ cache:
      - $HOME/.composer/cache/files
 
 install:
+  #=====================================================================
+  # Elasticsearch
+  #=====================================================================
   - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.1.tar.gz
   - tar -xzf elasticsearch-5.1.1.tar.gz
   - ./elasticsearch-5.1.1/bin/elasticsearch &
+  #=====================================================================
 
 before_script:
   #=====================================================================
   # Elasticsearch
   #=====================================================================
   - sleep 10 # ElasticSearch takes few seconds to start...
-  # - curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.1.deb && \
-  # - sudo dpkg -i --force-confnew elasticsearch-5.1.1.deb && \
-  # - sudo service elasticsearch start
-  #=====================================================================
   - composer install
   - touch .env
   - cp .env.dist .env
-  # Pour utiliser Behat
-  # - "sh start-server.sh > /dev/null &"
-  # - "phantomjs --webdriver=4444 > /dev/null &"
 
 script:
    - google-chrome-stable --no-sandbox --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
