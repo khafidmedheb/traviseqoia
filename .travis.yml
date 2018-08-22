@@ -22,8 +22,8 @@ before_script:
   - touch .env
   - cp .env.dist .env
   # Pour utiliser Behat
-  - "sh start-server.sh > /dev/null &"
-  - "phantomjs --webdriver=4444 > /dev/null &"
+  # - "sh start-server.sh > /dev/null &"
+  # - "phantomjs --webdriver=4444 > /dev/null &"
 
 script:
    - google-chrome-stable --no-sandbox --headless --disable-gpu --remote-debugging-port=9222 http://127.0.0.1:8000 &
@@ -40,12 +40,8 @@ script:
    # Outils de tests (fonctionnels et unitaires)
    #=====================================================================
    - ./vendor/bin/simple-phpunit --verbose
-   # - ./vendor/bin/simple-phpunit --filter=testLinks
-   # - ./vendor/bin/simple-phpunit --filter=testForm
-   
    # A tool to automatically fix PHP coding standards issues
-   - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src
-   
+   - ./vendor/bin/php-cs-fixer fix --using-cache=no --verbose --dry-run --diff --rules=@Symfony src 
    # Behat is an open source behavior-driven development framework for PHP
    # you start by writing human-readable sentences that describe a feature of your application and how it should work, 
    # and only then implement this behavior in software.

@@ -1,15 +1,6 @@
 default:
     suites:
         default:
-            # autoload:
-            #   '': %paths.base%/features/contexts
-            # suites:
-            #   general:
-            #     paths: [ %paths.base%/features/general ]
-            #     contexts: [ MyGeneralContext ]
-            # order_requests:
-            #   paths: [ %paths.base%/features/other ]
-            #   contexts: [ MyOtherContext ]
             paths:
                 features: features
                 bootstrap: features/bootstrap/bootstrap.php
@@ -26,19 +17,8 @@ default:
                 bootstrap: features/bootstrap/bootstrap.php
                 class: App\Kernel
         Behat\MinkExtension:
-            base_url: "http://localhost:8000/diary"
+            base_url: "http://localhost:8000/diary/"
             sessions:
               default:
                 symfony2: ~
-              # javascript:
-              #   selenium2:
-              #     browser: phantomjs
-            # capabilities:
-            #   chrome:
-            #     switches:
-                  # - "--headless"
-                  # - "--disable-gpu"
-                  # - "--no-sandbox"
-        # javascript_session: selenium2
-        # browser_name: chrome
         Behatch\Extension: ~
