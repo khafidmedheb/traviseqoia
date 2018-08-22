@@ -44,17 +44,11 @@ script:
    # Behat is an open source behavior-driven development framework for PHP
    # you start by writing human-readable sentences that describe a feature of your application and how it should work, 
    # and only then implement this behavior in software.
+   - vendor/bin/behat --profile=default -f progress
    #=====================================================================
-   - echo "toto"
-   - ls -l
-   - cat var/log/test.log
 
 after_failure:
-  - echo "Test after script"
-  - cat var/log/dev.log
-  - tail -f var/log/dev.log
   - cat var/log/test.log
-  - tail -f var/log/test.log
 
 cache:
   directories:
