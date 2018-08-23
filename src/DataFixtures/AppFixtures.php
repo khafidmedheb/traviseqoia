@@ -10,10 +10,9 @@ use App\Entity\Contact;
 use App\Entity\FoodRecord;
 
 /**
- * Classe de chargement d'un jeu de données (fixtures)
+ * Classe de chargement d'un jeu de données (fixtures).
  *
  * src/DataFixtures/AppFixtures.php
- * 
  * Loading fixtures : $ php bin/console doctrine:fixtures:load
  */
 class AppFixtures extends Fixture

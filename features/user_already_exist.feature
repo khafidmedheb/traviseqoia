@@ -6,7 +6,7 @@ Feature: User exist
   Scenario: See if email and usermame already exist
     Given I am on "/register"
     Then I should see "Log in" 
-    And I fill in "Email" with "user11@gmail.com"
+    And I fill in "Email" with "userfix11@gmail.com"
     And I fill in "Username" with "user11"
     And I fill in "Password" with "titi"
     And I fill in "Repeat password" with "titi"

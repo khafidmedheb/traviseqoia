@@ -329,7 +329,7 @@ class DiaryControllerTest extends WebTestCase
         $form = $crawler->selectButton('Register')->form();
 
         $form->setValues(array(
-            'fos_user_registration_form[email]' => 'user10@gmail.com',
+            'fos_user_registration_form[email]' => 'userfix10@gmail.com',
             'fos_user_registration_form[username]' => 'user10',
             'fos_user_registration_form[plainPassword][first]' => 'titi',
             'fos_user_registration_form[plainPassword][second]' => 'titi',
