@@ -14,7 +14,7 @@ Feature: Sign in to the website
             | username | testname |
             | password | toto |
         And I press "Log in"
-        Then I should be on "/welcome"
+        Then I should be on "/"
         And I should see "Welcome to Symfony 4.1.3"
 
     Scenario: Log in with bad credentials

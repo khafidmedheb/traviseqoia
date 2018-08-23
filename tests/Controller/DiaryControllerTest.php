@@ -434,7 +434,6 @@ class DiaryControllerTest extends WebTestCase
 
     public function testAuthentication()
     {
-        
         // ./vendor/bin/simple-phpunit --filter=testAuthentication
     
         $clientAuth = static::createClient(array(), array(
@@ -442,7 +441,7 @@ class DiaryControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'titi',
         ));
 
-        $crawler = $clientAuth->request('GET', '/', array(), array(), array(
+        $crawler = $clientAuth->request('GET', '/welcome', array(), array(), array(
             'PHP_AUTH_USER' => 'user10',
             'PHP_AUTH_PW'   => 'titi',
         ));
@@ -457,7 +456,7 @@ class DiaryControllerTest extends WebTestCase
         $this->assertSame(Response::HTTP_OK, $clientAuth->getResponse()->getStatusCode());
  
         // Verification si c'est la bonne page.
-        $this->assertContains('Bienvenue sur Symfony 4 !', $clientAuth->getResponse()->getContent());
+        $this->assertContains('Welcome to Symfony 4.1.3', $clientAuth->getResponse()->getContent());
 
 
         //Homepage Diary
@@ -539,7 +538,7 @@ class DiaryControllerTest extends WebTestCase
         $this->logIn();
 
         // Interrogation de la page de bienvenue
-        $crawler = $this->clientAuth->request('GET', '/');
+        $crawler = $this->clientAuth->request('GET', '/welcome');
  
         $this->assertEquals(
             'App\Controller\DiaryController::index',
