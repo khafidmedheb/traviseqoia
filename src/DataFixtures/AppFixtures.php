@@ -13,7 +13,7 @@ use App\Entity\FoodRecord;
  * Classe de chargement d'un jeu de données (fixtures).
  *
  * src/DataFixtures/AppFixtures.php
- * Loading fixtures : $ php bin/console doctrine:fixtures:load
+ * Loading fixtures : $ php bin/console doctrine:fixtures:load --append
  */
 class AppFixtures extends Fixture
 {
