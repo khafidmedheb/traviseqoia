@@ -14,7 +14,7 @@ use App\Form\ContactType;
 
 /**
  * Contrôleur gérant l'application "démo" food-diary.
- * Test commit
+ * Test commit ddde la classe.
  */
 class DiaryController extends Controller
 {

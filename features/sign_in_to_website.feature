@@ -13,7 +13,7 @@ Feature: Sign in to the website
         Given I am on "/login"
         When I fill in the following:
             | username | testname |
-            | password | toto12 |
+            | password | toto |
         And I press "Log in"
         Then I should be on "/"
         And I should see "Bienvenue sur Symfony 4 !"
