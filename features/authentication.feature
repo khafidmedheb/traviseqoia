@@ -6,8 +6,8 @@ Feature: Authentication
   Scenario: Logging in
     Given I am on "/login"
     When I follow "Log in" 
-    And I fill in "Username" with "user10"
-    And I fill in "Password" with "titi"
+    And I fill in "Username" with "testname"
+    And I fill in "Password" with "toto"
     And I press "Log in"
     Then I should see "Bienvenue sur Symfony 4 !"
 

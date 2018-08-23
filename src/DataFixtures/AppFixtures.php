@@ -20,7 +20,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //On crée 15 utilisateurs
-        for ($i = 0; $i <= 15; ++$i) {
+        for ($i = 1; $i <= 15; ++$i) {
             $user = new User();
             $user->setUsername('user'.$i);
             $user->setEmail('userfix'.$i.'@gmail.com');

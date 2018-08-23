@@ -11,8 +11,8 @@ Feature: Sign in to the website
     Scenario: Log in with username and password
         Given I am on "/login"
         When I fill in the following:
-            | username | user10 |
-            | password | titi |
+            | username | testname |
+            | password | toto |
         And I press "Log in"
         Then I should be on "/"
         And I should see "Bienvenue sur Symfony 4 !"
