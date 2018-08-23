@@ -5,4 +5,4 @@ Feature: Index
 
   Scenario: See the index page
     Given I am on "/"
-    Then I should see "Welcome to Symfony 4.1.3"
+    Then I should see "Bienvenue sur Symfony 4 !"
