@@ -21,7 +21,7 @@ class DiaryController extends Controller
     /**
      * Homepage de Symfony appli.
      *
-     * @Route("/welcome", name="symfo")
+     * @Route("/", name="symfo")
      */
     public function index()
     {
