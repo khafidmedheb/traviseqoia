@@ -441,7 +441,7 @@ class DiaryControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'titi',
         ));
 
-        $crawler = $clientAuth->request('GET', '/welcome', array(), array(), array(
+        $crawler = $clientAuth->request('GET', '/', array(), array(), array(
             'PHP_AUTH_USER' => 'user10',
             'PHP_AUTH_PW'   => 'titi',
         ));
