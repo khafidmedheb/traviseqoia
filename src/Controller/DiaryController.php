@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ use App\Form\ContactType;
 
 /**
  * Contrôleur gérant l'application "démo" food-diary.
- * Test commit ddde la classe.
+ * Test commit de la classe pour recommiter encore.
  */
 class DiaryController extends Controller
 {
