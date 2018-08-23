@@ -537,7 +537,7 @@ class DiaryControllerTest extends WebTestCase
         $this->logIn();
 
         // Interrogation de la page de bienvenue
-        $crawler = $this->clientAuth->request('GET', '/welcome');
+        $crawler = $this->clientAuth->request('GET', '/');
  
         // $this->assertEquals(
         //     'App\Controller\DiaryController::index',
