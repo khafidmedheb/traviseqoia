@@ -1,8 +1,5 @@
 <?php
 
-// src/DataFixtures/AppFixtures.php
-// Loading fixtures : $ php bin/console doctrine:fixtures:load
-
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -12,11 +9,16 @@ use App\Entity\User;
 use App\Entity\Contact;
 use App\Entity\FoodRecord;
 
+/**
+ * Classe de chargement d'un jeu de données (fixtures)
+ *
+ * src/DataFixtures/AppFixtures.php
+ * 
+ * Loading fixtures : $ php bin/console doctrine:fixtures:load
+ */
 class AppFixtures extends Fixture
 {
-
-    //Voir comment les users loaded "loggables" via le login de fosuserbundle
-    public function loadUserData(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         //On crée 15 utilisateurs
         for ($i = 0; $i <= 15; ++$i) {
@@ -30,10 +32,7 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
-    }
 
-    public function load(ObjectManager $manager)
-    {
         //On crée 15 contacts
         for ($i = 0; $i <= 16; ++$i) {
             $contact = new Contact();

@@ -331,8 +331,8 @@ class DiaryControllerTest extends WebTestCase
         $form->setValues(array(
             'fos_user_registration_form[email]' => 'user10@gmail.com',
             'fos_user_registration_form[username]' => 'user10',
-            'fos_user_registration_form[plainPassword][first]' => 'toto',
-            'fos_user_registration_form[plainPassword][second]' => 'toto',
+            'fos_user_registration_form[plainPassword][first]' => 'titi',
+            'fos_user_registration_form[plainPassword][second]' => 'titi',
             )
         );
 

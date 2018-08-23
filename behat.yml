@@ -17,7 +17,7 @@ default:
                 bootstrap: features/bootstrap/bootstrap.php
                 class: App\Kernel
         Behat\MinkExtension:
-            base_url: "http://localhost:8000/diary/"
+            base_url: "http://localhost:8000/"
             sessions:
               default:
                 symfony2: ~

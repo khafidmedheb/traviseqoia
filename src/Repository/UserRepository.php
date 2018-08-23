@@ -25,7 +25,7 @@ class UserRepository extends EntityRepository
     }
 
     public function findAllUsers()
-    {
+        {
         $sql = 'SELECT u FROM App:User u ';
 
         $result = $this->getEntityManager()
@@ -62,7 +62,7 @@ class UserRepository extends EntityRepository
 
         $result = $this->getEntityManager()
             ->createQuery($sql)
-            ->setParameters(array("name" => $name))
+            ->setParameters(array('name' => $name))
             ->getResult();
 
         return $result;
