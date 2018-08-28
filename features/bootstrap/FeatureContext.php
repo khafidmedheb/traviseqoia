@@ -1,6 +1,6 @@
 <?php
 
-// use Behat\Behat\Context\Context;
+use Behat\Behat\Context\Context;
 use Behat\MinkExtension\Context\MinkContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Mink\Driver\BrowserKitDriver;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-// use Behat\ChainedStepsExtension\Step;
 
 /**
  * This context class contains the definitions of the steps used by the demo 
@@ -16,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  * 
  * @see http://behat.org/en/latest/quick_start.html
  */
-class FeatureContext extends MinkContext   //implements Context
+class FeatureContext extends MinkContext implements Context
 {
     /**
      * @var KernelInterface
