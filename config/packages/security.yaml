@@ -29,8 +29,11 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-
-            logout:       true
+                default_target_path: /
+            logout:
+                path: /logout
+                target: /login
+            # logout:       true
             anonymous:    true
         secure_area:
             context: secured_area
@@ -38,6 +41,9 @@ security:
             http_basic:
                 realm: 'Secured Demo Area'
                 provider: in_memory
+            # logout:
+            #     path: /logout
+            #     target: /
 
             # activate different ways to authenticate
 
@@ -52,8 +58,11 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # Toute url commençant par /user/ nécessitera le ROLE_USER, il faudra donc être connecté.
         - { path: ^/admin/, roles: ROLE_ADMIN }
+        # Toute url commençant par /user/ nécessitera le ROLE_USER, il faudra donc être connecté.
         - { path: ^/user/, roles: ROLE_USER }
+        
         #- { path: ^/, role: ROLE_ADMIN }
         #- { path: ^/profile, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }

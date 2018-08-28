@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -19,6 +20,25 @@ use App\Form\ContactType;
  */
 class DiaryController extends Controller
 {
+    
+    /**
+     * Version de Php utilisée
+     *
+     * @Route("/diary/php-version", name="php_info")
+     * @return Response
+     */
+    public function phpVersion()
+    {
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_contents();
+        ob_end_clean();
+
+        return $this->render('phpinfo/phpinfo.html.twig', array(
+            'phpinfo'=>$phpinfo,
+        ));
+    }
+
     /**
      * Homepage de Symfony appli.
      *
@@ -26,7 +46,11 @@ class DiaryController extends Controller
      */
     public function index()
     {
+        
+        $symfony_version = \Symfony\Component\HttpKernel\Kernel::VERSION;
+
         return $this->render('index.html.twig', [
+            'symfony_version' => $symfony_version,
             'controller_name' => 'DiaryController',
         ]);
     }
@@ -185,53 +209,7 @@ class DiaryController extends Controller
         $this->get('mailer')->send($data['message']);
     }
 
-    /**
-     * Pour  tester le ROLE_USER.
-     *
-     * @Route("/user/test", name="testRoleUser")
-     */
-    public function testRoleAction(Request $request)
-    {
-        return $this->render('roles/hello-world.html.twig');
-    }
-
-    /**
-     * Pour  tester le ROLE_ADMIN.
-     *
-     * @Route("/admin", name="admin")
-     */
-    public function testAdminAction(Request $request)
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        //Va modifier l'email de l'utilisateur connecté
-        // $user = $this->getUser()->setEmail('khafid1506@gmail.com');
-
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($user);
-        // $em->flush;
-
-        return $this->render('admin/admin.html.twig');
-    }
-
-    /**
-     * Pour  tester le ROLE_ADMIN.
-     *
-     * @Route("/admin/test", name="testRoleAdmin")
-     */
-    public function testRoleAdminAction(Request $request)
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        //Va modifier l'email de l'utilisateur connecté
-        // $user = $this->getUser()->setEmail('khafid1506@gmail.com');
-
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($user);
-        // $em->flush;
-
-        return $this->render('roles/hello-world-admin.html.twig');
-    }
+    
 
     /**
      * @Route("/diary/ajax_request", name="ajax_request")

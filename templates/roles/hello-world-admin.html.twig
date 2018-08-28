@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Page de test admin</title>
 </head>
 <body>
 <h1>Admin Dashboard</h1>
-<p>Hello, tu es bien connecté en tant qu'administrateur !</p>
+<p>Hello {{ app.user.username }}, tu es bien connecté en tant qu'utilisateur... !</p>
+
+{% if app.user.hasRole('ROLE_ADMIN') %}
+	<div>...promu administrateur : tu peux donc voir cette phrase !.</div>
+
+{% endif %}
+
+
 </body>
 </html>

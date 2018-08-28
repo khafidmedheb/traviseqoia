@@ -7,7 +7,7 @@ default:
             contexts:
                 - FeatureContext:
                     kernel: '@kernel'
-                - Behat\MinkExtension\Context\MinkContext
+                # - Behat\MinkExtension\Context\MinkContext
                 - behatch:context:json
                 - behatch:context:rest
 
@@ -22,3 +22,30 @@ default:
               default:
                 symfony2: ~
         Behatch\Extension: ~
+
+
+# Knp\FriendlyContexts\Extension:
+#     smartTag: smartStep # <= default option
+#     symfony_kernel:
+#         bootstrap: app/autoload.php
+#         path: app/AppKernel.php
+#         class: AppKernel
+#         env: test
+#         debug: true
+                             
+# NEW CONFIG
+# default:
+#     autoload:
+#         "Context": "%paths.base%/features"
+#     suites:
+#         default:
+#             path: "%paths.base%/features"
+#             contexts:
+#                 - Knp\FriendlyContexts\Context\MinkContext
+#                 # - Knp\FriendlyContexts\Context\TableContext
+#                 # - Knp\FriendlyContexts\Context\EntityContext
+#                 # - Knp\FriendlyContexts\Context\AliceContext
+#                 # - Knp\FriendlyContexts\Context\PageContext
+#     extensions:
+#         Knp\FriendlyContexts\Extension:
+#             smartTag: smartStep # <= default option

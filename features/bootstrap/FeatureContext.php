@@ -1,9 +1,14 @@
 <?php
 
-use Behat\Behat\Context\Context;
+// use Behat\Behat\Context\Context;
+use Behat\MinkExtension\Context\MinkContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Behat\Mink\Driver\BrowserKitDriver;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+// use Behat\ChainedStepsExtension\Step;
 
 /**
  * This context class contains the definitions of the steps used by the demo 
@@ -11,7 +16,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * 
  * @see http://behat.org/en/latest/quick_start.html
  */
-class FeatureContext implements Context
+class FeatureContext extends MinkContext   //implements Context
 {
     /**
      * @var KernelInterface
@@ -45,4 +50,47 @@ class FeatureContext implements Context
             throw new \RuntimeException('No response received');
         }
     }
+
+    /**
+     * 
+     * @Given /^I am on login page$/
+     */
+    // public function iAmOnLoginPage()
+    // {
+    //     $this->visit('/login');
+    //     $this->fillField('username', 'testadmin');
+    //     $this->fillField('password', 'titi');
+    //     $this->pressButton('Log in');
+    //     // make assertion to be sure user is logged in
+    // }
+    
+
+
+    /**
+     * @Given /^I am logged in as admin$/
+     */
+    public function iAmLoggedInAsAdmin()
+    {
+        $this->visit('/login');
+        $this->fillField('username', 'testadmin');
+        $this->fillField('password', 'titi');
+        $this->pressButton('Log in');
+        $this->visit('/');
+
+        // make assertion to be sure user is logged in
+    }
+
+    /**
+     * @Given /^I am logged in as user$/
+     */
+    public function iAmLoggedInAsUser()
+    {
+        $this->visit('/login');
+        $this->fillField('username', 'testuser');
+        $this->fillField('password', 'titi');
+        $this->pressButton('Log in');
+        $this->visit('/');
+        // make assertion to be sure user is logged in
+    }
+  
 }
