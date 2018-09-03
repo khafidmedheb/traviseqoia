@@ -53,7 +53,14 @@ script:
    - php bin/console doctrine:schema:create --env=test
    - php bin/console doctrine:fixtures:load -n --env=test
    # Création d'un utilisateur qui peut accéder au login (mot de passe titi)
-   - php bin/console fos:user:create testname test@gmail.com titi
+   # - php bin/console fos:user:create testname test@gmail.com titi
+   # Création d'un utilisateur qui peut accéder au login (mot de passe titi)
+   - php bin/console fos:user:create testuser testuser@gmail.com titi
+   # Création d'un admin qui peut accéder au login (mot de passe titi)
+   - php bin/console fos:user:create testadmin testadmin@gmail.com titi
+   # Droit admin donné à testadmin (pour les tests admin Behat plus bas)
+   - php bin/console fos:user:promote testadmin ROLE_ADMIN
+
 
    #=====================================================================
    # Elasticsearch
