@@ -1,6 +1,6 @@
 <?php
 
-namespace Service;
+namespace App\Service;
 
 use Entity\ReleaseNote;
 use Repository\ReleaseNoteRepository;
