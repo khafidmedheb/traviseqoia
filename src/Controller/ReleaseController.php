@@ -7,13 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use MercuryBundle\Form\ReleaseType;
 use MercuryBundle\Entity\Release;
 use MercuryBundle\Entity\UserViewRelease;
 
 /**
- * Controller Release
+ * Controller Release.
  */
 class ReleaseController extends Controller
 {
@@ -26,7 +25,7 @@ class ReleaseController extends Controller
      */
     public function indexaction(request $request)
     {
-        $releases = $this->getDoctrine()->getRepository("MercuryBundle:Release")->findBy(array(), array('id' => 'DESC'));
+        $releases = $this->getDoctrine()->getRepository('MercuryBundle:Release')->findBy(array(), array('id' => 'DESC'));
         $release = new Release();
         $form = $this->createForm(ReleaseType::class, $release, array('action' => $this->generateUrl('gestion_release')));
         $form->handleRequest($request);
@@ -34,23 +33,23 @@ class ReleaseController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $release->setAdmin($this->getUser());
-                $release->setDate(new \DateTime(date("Y-m-d")));
+                $release->setDate(new \DateTime(date('Y-m-d')));
                 $release->setPublished(false);
                 $em->persist($release);
                 $em->flush();
                 $arrayJson = array(
-                    "id" => $release->getId(),
-                    "title" => $release->getTitle(),
-                    "description" => $release->getDescription(),
-                    "version" => $release->getVersion(),
-                    "date" => $release->getDate()->format("d/m/Y"),
+                    'id' => $release->getId(),
+                    'title' => $release->getTitle(),
+                    'description' => $release->getDescription(),
+                    'version' => $release->getVersion(),
+                    'date' => $release->getDate()->format('d/m/Y'),
                 );
 
                 return new JsonResponse($arrayJson);
             }
         }
 
-        return $this->render('MercuryBundle:Release:gestion.html.twig', array("releases" => $releases, 'form' => $form->createView()));
+        return $this->render('MercuryBundle:Release:gestion.html.twig', array('releases' => $releases, 'form' => $form->createView()));
     }
 
     /**
@@ -62,39 +61,39 @@ class ReleaseController extends Controller
      */
     public function sidebarReleaseAction(Request $request)
     {
-        $arrayReleases = $this->getDoctrine()->getRepository("MercuryBundle:Release")
-        ->findBy(array("published" => true), array('date' => 'DESC'));
+        $arrayReleases = $this->getDoctrine()->getRepository('MercuryBundle:Release')
+        ->findBy(array('published' => true), array('date' => 'DESC'));
         $cptReleaseNotsee = 0;
         $user = $this->getUser();
 
         foreach ($arrayReleases as $release) {
-            $verifExist = $this->getDoctrine()->getRepository("MercuryBundle:UserViewRelease")->verifExistTracker($user, $release);
-            if (count($verifExist) == 0) {
-                $cptReleaseNotsee++;
+            $verifExist = $this->getDoctrine()->getRepository('MercuryBundle:UserViewRelease')->verifExistTracker($user, $release);
+            if (0 == count($verifExist)) {
+                ++$cptReleaseNotsee;
             }
         }
-    
-        return $this->render('MercuryBundle:Release:sidebar_release.html.twig', array("releases" => $arrayReleases, 'cpt_release_notsee' => $cptReleaseNotsee));
+
+        return $this->render('MercuryBundle:Release:sidebar_release.html.twig', array('releases' => $arrayReleases, 'cpt_release_notsee' => $cptReleaseNotsee));
     }
 
     /**
      * @Route("/overview/{id}", name="overview_release", defaults={"id" = null})
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @return View
      */
     public function overviewAction(Request $request, $id)
     {
-        $releases = $this->getDoctrine()->getRepository("MercuryBundle:Release")->findBy(array("published" => true), array('date' => 'DESC'));
+        $releases = $this->getDoctrine()->getRepository('MercuryBundle:Release')->findBy(array('published' => true), array('date' => 'DESC'));
 
         $arrayReleases = array();
         foreach ($releases as $release) {
-            $arrayReleases[$release->getDate()->format('M Y')] [] = $release;
+            $arrayReleases[$release->getDate()->format('M Y')][] = $release;
         }
 
-        return $this->render('MercuryBundle:Release:overview.html.twig', array("array_releases" => $arrayReleases, 'id' => $id));
+        return $this->render('MercuryBundle:Release:overview.html.twig', array('array_releases' => $arrayReleases, 'id' => $id));
     }
 
     /**
@@ -108,7 +107,7 @@ class ReleaseController extends Controller
     {
         $id = $request->request->get('id');
         $markdown = $request->request->get('markdown');
-        $release = $this->getDoctrine()->getRepository("MercuryBundle:Release")->find($id);
+        $release = $this->getDoctrine()->getRepository('MercuryBundle:Release')->find($id);
         $release->setMarkdown($markdown);
         $em = $this->getDoctrine()->getManager();
         $em->persist($release);
@@ -127,7 +126,7 @@ class ReleaseController extends Controller
     public function shareAction(Request $request)
     {
         $id = $request->request->get('id');
-        $release = $this->getDoctrine()->getRepository("MercuryBundle:Release")->find($id);
+        $release = $this->getDoctrine()->getRepository('MercuryBundle:Release')->find($id);
         $release->setPublished(true);
         $em = $this->getDoctrine()->getManager();
         $em->persist($release);
@@ -146,7 +145,7 @@ class ReleaseController extends Controller
     public function removeAction(Request $request)
     {
         $id = $request->request->get('id');
-        $release = $this->getDoctrine()->getRepository("MercuryBundle:Release")->find($id);
+        $release = $this->getDoctrine()->getRepository('MercuryBundle:Release')->find($id);
         $title = $release->getTitle();
         $em = $this->getDoctrine()->getManager();
         $em->remove($release);
@@ -165,11 +164,11 @@ class ReleaseController extends Controller
     public function userViewReleaseAction(Request $request)
     {
         $id = $request->request->get('id');
-        $release = $this->getDoctrine()->getRepository("MercuryBundle:Release")->find($id);
+        $release = $this->getDoctrine()->getRepository('MercuryBundle:Release')->find($id);
         $user = $this->getUser();
-        $verifExist = $this->getDoctrine()->getRepository("MercuryBundle:UserViewRelease")->verifExistTracker($user, $release);
+        $verifExist = $this->getDoctrine()->getRepository('MercuryBundle:UserViewRelease')->verifExistTracker($user, $release);
 
-        if (count($verifExist) == 0) {
+        if (0 == count($verifExist)) {
             $UserViewRelease = new UserViewRelease();
             $UserViewRelease->setUtilisateur($user)->setRelease($release);
             $em = $this->getDoctrine()->getManager();
@@ -177,7 +176,7 @@ class ReleaseController extends Controller
             $em->flush();
         }
 
-        return new Response("ok");
+        return new Response('ok');
     }
 
     /**
@@ -189,15 +188,15 @@ class ReleaseController extends Controller
      */
     public function actualizeReleaseAction(Request $request)
     {
-        $releases = $this->getDoctrine()->getRepository("MercuryBundle:Release")->findBy(array("published" => true), array('date' => 'DESC'));
+        $releases = $this->getDoctrine()->getRepository('MercuryBundle:Release')->findBy(array('published' => true), array('date' => 'DESC'));
         $arrayJson = array();
         $user = $this->getUser();
         $cpt = 0;
         foreach ($releases as $release) {
-            $verifExist = $this->getDoctrine()->getRepository("MercuryBundle:UserViewRelease")->verifExistTracker($user, $release);
-            if (count($verifExist) == 0) {
-                $arrayJson["releases"][] = array("id" => $release->getId(), "title" => $release->getTitle(), "description" => $release->getDescription(), "date" => $release->getDate()->format('Y-m-d'));
-                $cpt++;
+            $verifExist = $this->getDoctrine()->getRepository('MercuryBundle:UserViewRelease')->verifExistTracker($user, $release);
+            if (0 == count($verifExist)) {
+                $arrayJson['releases'][] = array('id' => $release->getId(), 'title' => $release->getTitle(), 'description' => $release->getDescription(), 'date' => $release->getDate()->format('Y-m-d'));
+                ++$cpt;
             }
         }
         $arrayJson['length'] = $cpt;

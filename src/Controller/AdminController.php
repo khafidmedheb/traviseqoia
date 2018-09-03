@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\HttpFoundation\JsonResponse;
+
 // use App\Entity\FoodRecord;
 // use App\Entity\User;
 // use App\Entity\Contact;
@@ -15,12 +13,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 // use App\Form\ContactType;
 
 /**
- * Contrôleur gérant la page d'admin
- *
+ * Contrôleur gérant la page d'admin.
  */
 class AdminController extends Controller
 {
-    
     /**
      * Pour tester le ROLE_ADMIN.
      *
@@ -40,7 +36,6 @@ class AdminController extends Controller
         return $this->render('admin/admin.html.twig');
     }
 
-    
     /**
      * Pour  tester le ROLE_USER.
      *
@@ -50,7 +45,6 @@ class AdminController extends Controller
     {
         return $this->render('roles/hello-world.html.twig');
     }
-
 
     /**
      * Pour tester le ROLE_ADMIN.
@@ -70,6 +64,4 @@ class AdminController extends Controller
 
         return $this->render('roles/hello-world-admin.html.twig');
     }
-
-    
 }

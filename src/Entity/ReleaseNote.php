@@ -1,6 +1,8 @@
 <?php
 
-namespace Entity;
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Release note.
@@ -55,7 +57,7 @@ class ReleaseNote
     private $date;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="published", type="boolean")
      */
@@ -68,9 +70,9 @@ class ReleaseNote
     // private $admin;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -78,7 +80,7 @@ class ReleaseNote
     }
 
     /**
-     * Set Title
+     * Set Title.
      *
      * @param string $title
      *
@@ -92,7 +94,7 @@ class ReleaseNote
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -102,7 +104,7 @@ class ReleaseNote
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -116,7 +118,7 @@ class ReleaseNote
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -126,7 +128,7 @@ class ReleaseNote
     }
 
     /**
-     * Set markdown
+     * Set markdown.
      *
      * @param string $markdown
      *
@@ -140,7 +142,7 @@ class ReleaseNote
     }
 
     /**
-     * Get markdown
+     * Get markdown.
      *
      * @return string
      */
@@ -150,7 +152,7 @@ class ReleaseNote
     }
 
     /**
-     * Set version
+     * Set version.
      *
      * @param string $version
      *
@@ -164,7 +166,7 @@ class ReleaseNote
     }
 
     /**
-     * Get version
+     * Get version.
      *
      * @return string
      */
@@ -174,7 +176,7 @@ class ReleaseNote
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
      *
@@ -188,7 +190,7 @@ class ReleaseNote
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -198,9 +200,9 @@ class ReleaseNote
     }
 
     /**
-     * Set published
+     * Set published.
      *
-     * @param boolean $published
+     * @param bool $published
      *
      * @return ReleaseNote
      */
@@ -212,9 +214,9 @@ class ReleaseNote
     }
 
     /**
-     * Get published
+     * Get published.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getPublished()
     {

@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\FoodRecord;
-use App\Entity\User;
 use App\Entity\Contact;
 use App\Form\FoodType;
 use App\Form\ContactType;
@@ -20,11 +19,11 @@ use App\Form\ContactType;
  */
 class DiaryController extends Controller
 {
-    
     /**
-     * Version de Php utilisée
+     * Version de Php utilisée.
      *
      * @Route("/diary/php-version", name="php_info")
+     *
      * @return Response
      */
     public function phpVersion()
@@ -35,7 +34,7 @@ class DiaryController extends Controller
         ob_end_clean();
 
         return $this->render('phpinfo/phpinfo.html.twig', array(
-            'phpinfo'=>$phpinfo,
+            'phpinfo' => $phpinfo,
         ));
     }
 
@@ -46,7 +45,6 @@ class DiaryController extends Controller
      */
     public function index()
     {
-        
         $symfony_version = \Symfony\Component\HttpKernel\Kernel::VERSION;
 
         return $this->render('index.html.twig', [
@@ -208,8 +206,6 @@ class DiaryController extends Controller
 
         $this->get('mailer')->send($data['message']);
     }
-
-    
 
     /**
      * @Route("/diary/ajax_request", name="ajax_request")
