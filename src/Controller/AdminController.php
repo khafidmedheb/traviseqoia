@@ -24,7 +24,7 @@ class AdminController extends Controller
     /**
      * Pour tester le ROLE_ADMIN.
      *
-     * @Route("/admin", name="admin")
+     * @Route("/admintest", name="admin")
      */
     public function indexAdmin(Request $request)
     {
