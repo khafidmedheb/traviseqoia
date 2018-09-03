@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -38,8 +38,8 @@ class ReleaseNoteController
 
     }
 
-    public function setContainer($argument1)
-    {
-        // TODO: write logic here
-    }
+    // public function setContainer($argument1)
+    // {
+        
+    // }
 }
